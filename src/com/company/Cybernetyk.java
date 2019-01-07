@@ -7,11 +7,17 @@ public class Cybernetyk implements Character{
     int hack;
     int DAP;
 
+    int lvl;
+    int exp;
+
     Cybernetyk(){
         HP = 100;
         AP =45;
         hack=56;
         DAP=70;
+
+        lvl=1;
+        exp=0;
     }
 
 
@@ -35,6 +41,15 @@ public class Cybernetyk implements Character{
         return DAP;
     }
 
+
+    public int getLevel() {
+        return lvl;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
     @Override
     public void setHP(int HP) {
         this.HP = HP;
@@ -54,4 +69,13 @@ public class Cybernetyk implements Character{
     public void setDAP(int DAP) {
         this.DAP = DAP;
     }
+
+    public void setLevel(int lvl) {
+        this.lvl = lvl;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
 }

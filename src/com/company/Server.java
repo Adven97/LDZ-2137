@@ -23,7 +23,8 @@ public class Server implements Runnable {
     Quests quests;
     int tura;
     boolean cybernetyk, badass, haker;
-    int HP, AP, hack, DAP;
+    static int HP=100, AP, hack, DAP, lvl, exp;
+    static int nextLevel;
     int nomOfPlayas;
     boolean gameLoop;
 
@@ -79,7 +80,7 @@ public class Server implements Runnable {
 
             String messageFromClient;
             while (gameLoop) {
-                
+
 
                     if(tura ==1) {
                         if ((messageFromClient = reader.readLine()) != null) {
@@ -130,6 +131,10 @@ public class Server implements Runnable {
                                 this.AP = cybernetyk.getAP();
                                 this.DAP = cybernetyk.getDAP();
                                 this.hack = cybernetyk.getHack();
+                                this.lvl = cybernetyk.getLevel();
+                                this.exp = cybernetyk.getExp();
+
+                                nextLevel=10;
 
                                 content.startCampaign(writer, 23);
                                 tura++;
@@ -141,6 +146,10 @@ public class Server implements Runnable {
                                 this.AP = haker.getAP();
                                 this.DAP = haker.getDAP();
                                 this.hack = haker.getHack();
+                                this.lvl = haker.getLevel();
+                                this.exp = haker.getExp();
+
+                                nextLevel=10;
 
                                 content.startCampaign(writer, 21);
                                 tura++;
@@ -152,6 +161,10 @@ public class Server implements Runnable {
                                 this.AP = badAss.getAP();
                                 this.DAP = badAss.getDAP();
                                 this.hack = badAss.getHack();
+                                this.lvl = badAss.getLevel();
+                                this.exp = badAss.getExp();
+
+                                nextLevel=10;
 
                                 content.startCampaign(writer, 23);
                                 tura++;
@@ -167,10 +180,12 @@ public class Server implements Runnable {
 
                 if(tura ==4) {
                     System.out.println("jest tura: "+tura);
+                    checkLvl();
                     if ((messageFromClient = reader.readLine()) != null) {
                         if (messageFromClient.equals("1")) {
                             writer.println("Pokonałes przeciwników, lecz oni zabrali ci 12 HP");
                             this.HP -=12;
+                            this.exp+=1;
                             quests.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
                             quests.quest1(writer);
                             tura++;
@@ -192,123 +207,48 @@ public class Server implements Runnable {
                 }
 
                 if(tura ==5) {
+                    checkLvl();
                     System.out.println("jest tura: "+tura);
                     if ((messageFromClient = reader.readLine()) != null) {
-                        quests.quest1Ans(writer,messageFromClient,tura,quests,this.HP,this.AP, this.hack, this.DAP);
+                        quests.quest1Ans(writer,messageFromClient,tura,quests);
+                        quests.quest2(writer);
                         tura++;
-//                        if (messageFromClient.equals("1")) {
-//                            writer.println("Zabiłes niewinnego człowieka, zabrał ci 2 HP");
-//                            this.HP -=2;
-//                            content.quest2(writer,15);
-//                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-//                           tura++;
-//                        }
-//                      else  if (messageFromClient.equals("2")) {
-//                            writer.println("nuuuda nic sie nie dzieje");
-//                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-//                            content.quest2(writer,15);
-//                            tura++;
-//                        }
-//                       else if (messageFromClient.equals("3")) {
-//                            writer.println("Ta menda chce nas ujebać");
-//                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-//                            content.quest2(writer,15);
-//                            tura++;
-//                        }
-//                        else if (messageFromClient.equals("exit")) {
-//                            writer.println("Do widzenia");
-//                        }
-//                        else {
-//                            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
-//                            //content.beginingOfTheGame(writer);
-//                        }
+//
                     }
                 }
 
                 if(tura ==6) {
+                    checkLvl();
                     System.out.println("jest tura: "+tura);
                     if ((messageFromClient = reader.readLine()) != null) {
-                        quests.quest2Ans(writer,messageFromClient,tura,quests,this.HP,this.AP, this.hack, this.DAP);
+                        quests.quest2Ans(writer,messageFromClient,tura,quests);
+                        quests.quest3(writer);
                         tura++;
-                      /*  if (messageFromClient.equals("1")) {
-                            writer.println("Było ciężko, ale zdołałes ich pokonac, zabrał ci 20 HP");
-                            this.HP -=20;
-                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-                            content.quest3(writer,18,messageFromClient,tura, content,this.HP,this.AP, this.hack, this.DAP);
-                            tura++;
-                        }
-                        else if (messageFromClient.equals("2")) {
-                            writer.println("nuuuda nic sie nie dzieje");
-                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-                            content.quest3(writer,18,messageFromClient,tura, content,this.HP,this.AP, this.hack, this.DAP);
-                            tura++;
-                        }
 
-                        else if (messageFromClient.equals("exit")) {
-                            writer.println("Do widzenia");
-                        }
-                        else {
-                            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
-                            //content.beginingOfTheGame(writer);
-                        }*/
                     }
                 }
                 if(tura ==7) {
+                    checkLvl();
                     System.out.println("jest tura: "+tura);
                     if ((messageFromClient = reader.readLine()) != null) {
-                        quests.quest3Ans(writer,messageFromClient,tura,quests,this.HP,this.AP, this.hack, this.DAP);
+                        quests.quest3Ans(writer,messageFromClient,tura,quests);
+                        quests.quest4(writer);
                         tura++;
-                       /* if (messageFromClient.equals("1")) {
-                            writer.println("Nie było ciężko, zostałeś postrzelony ale zdołałes ich pokonac, zabrali ci 16 HP");
-                            this.HP -=16;
-                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-                            tura++;
-                        }
-                        else if (messageFromClient.equals("2")) {
-                            writer.println("Zostałeś postrzelony wielokrotnie");
-                            writer.println("Zdołałes pokonac 2 androidów i 1 człowieka,pozostali uciekli");
-                            writer.println("W sumie zabrali ci 22 HP");
-                            this.HP -=22;
-                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-                            tura++;
-                        }
 
-                        else if (messageFromClient.equals("3")) {
-                            writer.println("Ledwo udało ci się ujść z życiem");
-                            writer.println("Zdołałes pokonac 2 policjantów, 3 androidów i 1 człowieka,pozostali uciekli");
-                            writer.println("W sumie zabrali ci 56 HP");
-                            this.HP -=56;
-                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-                            tura++;
-                        }
-                        else if (messageFromClient.equals("4")) {
-                            writer.println("Z nudów poszedłeś na kebaba");
-                            writer.println("Wziąłes super mega rollo");
-                            writer.println("Twoje hp wzrosło o 12");
-                            this.HP +=12;
-                            content.showStats(writer,this.HP,this.AP, this.hack, this.DAP);
-                             tura++;
-                        }
-
-                        else if (messageFromClient.equals("exit")) {
-                            writer.println("Do widzenia");
-                        }
-                        else {
-                            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
-                            //content.beginingOfTheGame(writer);
-                        }*/
                     }
                 }
                 if(tura ==8) {
+                    checkLvl();
                     System.out.println("jest tura: "+tura);
                     if ((messageFromClient = reader.readLine()) != null) {
-                        quests.quest4Ans(writer, messageFromClient, quests, this.HP, this.AP, this.hack, this.DAP, cybernetyk, haker, badass);
+                        quests.quest4Ans(writer, messageFromClient, quests, cybernetyk, haker, badass);
                         tura++;
                     }
-                        //gameLoop=false;
-                      //  writer.println("koniec gry");
+
                     }
+
                 if(tura >=9) {
+                    checkLvl();
                     System.out.println("jest tura: "+tura);
                     Random rand = new Random();
                     int num = rand.nextInt(nomOfQuests);
@@ -316,15 +256,12 @@ public class Server implements Runnable {
                     switch (num){
                         case 0:
                             quests.quest1(writer);
-
                             break;
                         case 1:
                             quests.quest2(writer);
-
                             break;
                         case 2:
                             quests.quest3(writer);
-
                             break;
                         case 3:
                             quests.quest4(writer);
@@ -337,22 +274,21 @@ public class Server implements Runnable {
                         switch (num){
                             case 0:
                                 //quests.quest1(writer,22);
-                                quests.quest1Ans(writer,messageFromClient,tura,quests,this.HP,this.AP, this.hack, this.DAP);
+                                quests.quest1Ans(writer,messageFromClient,tura,quests);
                                 tura++;
                                 break;
                             case 1:
                                // quests.quest2(writer,22);
-                                quests.quest2Ans(writer,messageFromClient,tura,quests,this.HP,this.AP, this.hack, this.DAP);
+                                quests.quest2Ans(writer,messageFromClient,tura,quests);
                                 tura++;
                                 break;
                             case 2:
                                 //quests.quest3(writer,22);
-                                quests.quest3Ans(writer,messageFromClient,tura,quests,this.HP,this.AP, this.hack, this.DAP);
+                                quests.quest3Ans(writer,messageFromClient,tura,quests);
                                 tura++;
                                 break;
                             case 3:
-
-                                quests.quest4Ans(writer,messageFromClient,quests,this.HP,this.AP, this.hack, this.DAP,cybernetyk,haker,badass);
+                                quests.quest4Ans(writer,messageFromClient,quests,cybernetyk,haker,badass);
                                 tura++;
                                 break;
                         }
@@ -368,12 +304,10 @@ public class Server implements Runnable {
             System.out.println("Nie udało się połączyć "+e.getMessage());
         }
     }
-    void losujQuest(){
-
+    void checkLvl(){
+        if(exp == nextLevel){
+            lvl++;
+            nextLevel=nextLevel*2;
+        }
     }
 }
-
-
-//if (messageFromClient.equals("1")) {}
-
-

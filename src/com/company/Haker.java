@@ -7,11 +7,17 @@ public class Haker implements Character {
     int hack;
     int DAP;
 
+    int lvl;
+    int exp;
+
     Haker(){
         HP = 100;
         AP =37;
         hack=79;
         DAP=55;
+
+        lvl=1;
+        exp=0;
     }
 
 
@@ -35,6 +41,14 @@ public class Haker implements Character {
         return DAP;
     }
 
+    public int getLevel() {
+        return lvl;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
     @Override
     public void setHP(int HP) {
         this.HP = HP;
@@ -53,5 +67,13 @@ public class Haker implements Character {
     @Override
     public void setDAP(int DAP) {
         this.DAP = DAP;
+    }
+
+    public void setLevel(int lvl) {
+        this.lvl = lvl;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
     }
 }

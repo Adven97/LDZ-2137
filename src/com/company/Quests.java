@@ -2,14 +2,18 @@ package com.company;
 
 import java.io.PrintWriter;
 
+import static com.company.Server.exp;
+import static com.company.Server.lvl;
+
 public class Quests {
 
     static int nomOfQuests =4;
 
     void showStats (PrintWriter writer, int hp, int ap, int hac, int dap ) {
-        writer.println("------------------------------");
-        writer.println("|----"+hp+"----"+ap+"----"+hac+"----"+dap+"----|");
-        writer.println("------------------------------");
+        writer.println("|---------------------------------------------|");
+        writer.println("|----HP----AP---HACK---DAP----|----exp: "+exp+"-----|");
+        writer.println("|----"+hp+"----"+ap+"----"+hac+"----"+dap+"-----|----LEVEL: "+lvl+"---|");
+        writer.println("|---------------------------------------------|");
         writer.println(" ");
     }
 
@@ -21,18 +25,19 @@ public class Quests {
         writer.println(" [1] Zgadzam się");
         writer.println(" [2] Nie zgadzam się");
     }
-    void quest1Ans(PrintWriter writer,String messageFromClient, int tura, Quests content,int hp, int ap, int hc, int dap){
+    void quest1Ans(PrintWriter writer,String messageFromClient, int tura, Quests content){
         if (messageFromClient.equals("1")) {
             writer.println("Zabiłes niewinnego człowieka, zabrał ci 2 HP");
-            hp -=2;
-            content.showStats(writer,hp,ap, hc, dap);
-            content.quest2(writer);
+            Server.HP -=2;
+            exp+=1;
+            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
+           // content.quest2(writer);
             tura++;
         }
         else  if (messageFromClient.equals("2")) {
             writer.println("nuuuda nic sie nie dzieje");
             //   content.showStats(writer,hp,ap, hc, dap);
-            content.quest2(writer);
+          //  content.quest2(writer);
             tura++;
         }
 
@@ -54,18 +59,19 @@ public class Quests {
 
     }
 
-    void quest2Ans(PrintWriter writer,String messageFromClient, int tura, Quests content,int hp, int ap, int hc, int dap){
+    void quest2Ans(PrintWriter writer,String messageFromClient, int tura, Quests content){
         if (messageFromClient.equals("1")) {
             writer.println("Było ciężko, ale zdołałes ich pokonac, zabrał ci 20 HP");
-            hp -=20;
-            content.showStats(writer,hp,ap, hc, dap);
-            content.quest3(writer);
+            Server.HP -=20;
+            exp+=2;
+            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
+           // content.quest3(writer);
             tura++;
         }
         else if (messageFromClient.equals("2")) {
             writer.println("nuuuda nic sie nie dzieje");
             //  content.showStats(writer,hp,ap, hc, dap);
-            content.quest3(writer);
+           // content.quest3(writer);
             tura++;
         }
 
@@ -88,21 +94,23 @@ public class Quests {
         writer.println(" [4] Uciekam");
 
     }
-    void quest3Ans(PrintWriter writer,String messageFromClient, int tura, Quests content,int hp, int ap, int hc, int dap){
+    void quest3Ans(PrintWriter writer,String messageFromClient, int tura, Quests content){
         if (messageFromClient.equals("1")) {
             writer.println("Nie było ciężko, zostałeś postrzelony ale zdołałes ich pokonac, zabrali ci 16 HP");
-            hp -=16;
-            content.showStats(writer,hp,ap, hc, dap);
-            content.quest4(writer);
+            Server.HP -=16;
+            exp+=2;
+            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
+           // content.quest4(writer);
             tura++;
         }
         else if (messageFromClient.equals("2")) {
             writer.println("Zostałeś postrzelony wielokrotnie");
             writer.println("Zdołałes pokonac 2 androidów i 1 człowieka,pozostali uciekli");
             writer.println("W sumie zabrali ci 22 HP");
-            hp -=22;
-            content.showStats(writer,hp,ap, hc, dap);
-            content.quest4(writer);
+            Server.HP -=22;
+            exp+=2;
+            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
+          //  content.quest4(writer);
             tura++;
         }
 
@@ -110,18 +118,19 @@ public class Quests {
             writer.println("Ledwo udało ci się ujść z życiem");
             writer.println("Zdołałes pokonac 2 policjantów, 3 androidów i 1 człowieka,pozostali uciekli");
             writer.println("W sumie zabrali ci 56 HP");
-            hp -=56;
-            content.showStats(writer,hp,ap, hc, dap);
-            content.quest4(writer);
+            Server.HP -=56;
+            exp+=4;
+            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
+           // content.quest4(writer);
             tura++;
         }
         else if (messageFromClient.equals("4")) {
             writer.println("Z nudów poszedłeś na kebaba");
             writer.println("Wziąłes super mega rollo");
             writer.println("Twoje hp wzrosło o 13");
-            hp +=13;
-            content.showStats(writer,hp,ap, hc, dap);
-            content.quest4(writer);
+            Server.HP +=13;
+            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
+           // content.quest4(writer);
             tura++;
         }
 
@@ -145,31 +154,38 @@ public class Quests {
 
 
     }
-    void quest4Ans(PrintWriter writer,String messageFromClient, Quests content,int hp, int ap, int hc, int dap, boolean b1, boolean b2, boolean b3){
+    void quest4Ans(PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3){
         if (messageFromClient.equals("1")) {
             if(b1) {
                 writer.println("Nie było ciężko, lekko cie pokiereszowali");
-                hp -= 5;
-                content.showStats(writer, hp, ap, hc, dap);
+                Server.HP -= 5;
+                exp+=1;
+                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
             }
             if(b2) {
                 writer.println("Nie było ciężko, ale jeden cie ugryzł w noge");
-                hp -= 15;
-                content.showStats(writer, hp, ap, hc, dap);
+                Server.HP -= 15;
+                exp+=1;
+                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP);
             }
             if(b3) {
                 writer.println("Nie było ciężko, Nie odniosłeś żadnych obrażeń");
-                //hp -= 5;
-                //content.showStats(writer, hp, ap, hc, dap);
+                exp+=2;
             }
         }
         else if (messageFromClient.equals("2")) {
-            writer.println("Zostałeś postrzelony wielokrotnie");
-            writer.println("Zdołałes pokonac 2 androidów i 1 człowieka,pozostali uciekli");
-            writer.println("W sumie zabrali ci 22 HP");
-            hp -=22;
-            content.showStats(writer,hp,ap, hc, dap);
-          //  tura++;
+            if(b1 || b2) {
+                writer.println("Niby udało ci się uciec, ale niestety poślizgnąłeś się i upadłeś na twarz");
+                writer.println(" -9 HP");
+                Server.HP -= 9;
+                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP);
+            }
+            if (b3) {
+                writer.println("Uciekając znalazłeś paczke leków");
+                writer.println(" +15 HP");
+                Server.HP += 15;
+                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP);
+            }
         }
 
 
