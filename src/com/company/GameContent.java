@@ -5,23 +5,60 @@ import java.util.ArrayList;
 
 public class GameContent {
 
-    ArrayList<String> listOfQuests = new ArrayList<String>();
+    //ArrayList<String> listOfQuests = new ArrayList<String>();
     ArrayList<PrintWriter> listOfPlayers = null;
+    ArrayList<Integer> listOfGamePorts = null;
+    ArrayList<Integer> listOfScores = null;
+    ArrayList<Quests> listOfQuests= null;
     ArrayList<ArrayList<Integer>> clientsAppointment = new ArrayList<ArrayList<Integer>>();
     int options;
 
-    GameContent(ArrayList<PrintWriter> listOfPlayers) {
+    GameContent(ArrayList<PrintWriter> listOfPlayers, ArrayList<Integer> listOfGamePorts, ArrayList<Integer> listOfScores,
+                ArrayList<Quests> listOfQuests) {
+
         this.listOfPlayers = listOfPlayers;
+        this.listOfGamePorts = listOfGamePorts;
+        this.listOfScores = listOfScores;
+        this.listOfQuests = listOfQuests;
         this.options =1;
     }
 
 
-    String getAppointment(int i) {
-        return listOfQuests.get(i);
+    int getPlaya(int i) {
+        return listOfGamePorts.get(i);
     }
 
-    void addPlaya(PrintWriter writer) {
+    int getPlayaNum(int port) {
+        return listOfGamePorts.indexOf(port);
+    }
+
+    int getPlayaScore(int i) {
+        return listOfScores.get(i);
+    }
+
+//    void setPlayaScore(int i, String st) {
+//        listOfScores.set(i,st);
+//    }
+
+    void addPlayaScore(int i,int st) {
+        listOfScores.add(i,st);
+    }
+
+    int nomOfPlayerss(){
+        return listOfGamePorts.size();
+    }
+
+    void addPlaya(PrintWriter writer, int port, Quests q, int scr) {
         listOfPlayers.add(writer);
+        listOfQuests.add(q);
+        listOfGamePorts.add(port);
+        listOfScores.add(scr);
+    }
+
+    void showRanking(PrintWriter writer) {
+        for (int i = 0; i < listOfPlayers.size(); i++) {
+            writer.println((i+1)+" - "+listOfPlayers.get(i));
+        }
     }
 
 
