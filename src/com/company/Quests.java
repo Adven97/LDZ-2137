@@ -171,18 +171,18 @@ public class Quests {
                 writer.println(" -5 HP");
                 Server.HP -= 5;
                 knt.exp3[knt.nomOfPlayerss()-1]+=1;
-                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+              //  content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b2) {
                 writer.println("Nie było ciężko, ale jeden cie ugryzł w noge");
                 writer.println(" -15 HP");
                 Server.HP -= 15;
-                knt.exp3[knt.nomOfPlayerss()-1]+=1;
-                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+              //  knt.exp3[knt.nomOfPlayerss()-1]+=1;
+               // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b3) {
                 writer.println("Nie było ciężko, Nie odniosłeś żadnych obrażeń, lika BOSS");
-                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+               // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
                 knt.exp3[knt.nomOfPlayerss()-1]+=2;
             }
         }
@@ -191,13 +191,13 @@ public class Quests {
                 writer.println("Niby udało ci się uciec, ale niestety poślizgnąłeś się i upadłeś na twarz");
                 writer.println(" -6 HP");
                 Server.HP -= 6;
-                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
+              //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
             if (b3) {
                 writer.println("Uciekając znalazłeś paczke leków");
                 writer.println(" +15 HP");
                 Server.HP += 15;
-                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
+              //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
         }
 
@@ -234,37 +234,40 @@ public class Quests {
 
     }
 
-    void getRandomQuestAns (PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3, GameContent knt) {
-
+    boolean getRandomQuestAns (PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3, GameContent knt,ArrayList<Integer> myHP) {
+        boolean tem=false;
         if (messageFromClient.equals("1")) {
             if(b1) {
 
                 writer.println("Druciarze to dla ciebie pestka, gorzej z ludzmi i androidami");
                 writer.println(" -"+ileZycia(4, 1, 2)+" HP");
-                Server.HP -= ileZycia(4, 1, 2);
-                knt.exp3[knt.nomOfPlayerss()-1]+=2;
+                myHP.add(ileZycia(4, 1, 2));
+             //   knt.exp3[knt.nomOfPlayerss()-1]+=2;
                 //content.addPlayaScore(content.getPlayaNum(String.valueOf(clientPortNumber)), String.valueOf(exp));
+                tem=true;
                 content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b2) {
                 writer.println("Dobrze rozwaliłes tych andków, z pozostałymi nie było tak łatwo");
                 writer.println(" -"+ileZycia(4, 2, 1)+" HP");
-                Server.HP -= ileZycia(4, 2, 1);
+                myHP.add(ileZycia(4, 2, 1));
                 knt.exp3[knt.nomOfPlayerss()-1]+=2;
                 content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+                tem=true;
             }
             if(b3) {
                 writer.println("Poradziłes sobie z ludzmi, niestety z pozostałymi nie było łatwo");
                 writer.println(" -"+ileZycia(1, 2, 4)+" HP");
-                Server.HP -= ileZycia(1, 2, 4);
-                knt.exp3[knt.nomOfPlayerss()-1]+=2;
+                myHP.add(ileZycia(1, 2, 4));
+                //knt.exp3[knt.nomOfPlayerss()-1]+=2;
                 content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+                tem=true;
             }
         }
         else if (messageFromClient.equals("2")) {
             Random rand = new Random();
             int num = rand.nextInt(7)+2;
-
+            tem=false;
             if(b1) {
                 writer.println("Udało ci sie uciec, po drodze znalazłeś zajefajny implant");
                 writer.println(" +"+num+" HP");
@@ -299,6 +302,7 @@ public class Quests {
             writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
         }
 
+        return tem;
     }
 
 
@@ -314,7 +318,7 @@ public class Quests {
             ileZdrowiaZabrali+=andki;
         }
 
-        return ileZdrowiaZabrali;
+        return ileZdrowiaZabrali*(-1);
     }
 
     int getPointsFromya(ArrayList<Integer> a){

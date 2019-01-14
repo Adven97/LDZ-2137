@@ -28,9 +28,10 @@ public class Server implements Runnable {
     //static int[] exp3;
     static int nextLevel;
     int nomOfPlayas;
-    static boolean gameLoop;
+     boolean gameLoop;
     //static int[] exp3;
     ArrayList<Integer> myPoints=null;
+    ArrayList<Integer> myHP=null;
 
 
     Server() {}
@@ -42,6 +43,7 @@ public class Server implements Runnable {
 
         //this.exp3= exp;
         myPoints = new ArrayList<Integer>();
+        myHP = new ArrayList<Integer>();
         this.tura=0;
         this.cybernetyk=false;
         this.haker=false;
@@ -57,6 +59,13 @@ public class Server implements Runnable {
         ArrayList<Quests> listOfQuests = new ArrayList<Quests>();
       //  int[] exp33 = new int[222];
         GameContent gracze = new GameContent(wszyscyGracze, wszyskiePorty,scores,listOfQuests);
+
+//        ArrayList<Integer> prykaldowaa = new ArrayList<Integer>();
+//        prykaldowaa.add(100);
+//        prykaldowaa.add(-12);
+//        prykaldowaa.add(-8);
+//        prykaldowaa.add(-18);
+//        System.out.println("prykladowa ma : "+ getPointsFromya(prykaldowaa));
 
 
         System.out.println("Serwer uruchomiony na porcie "+SERVER_PORT);
@@ -148,6 +157,7 @@ public class Server implements Runnable {
                             this.DAP = cybernetyk.getDAP();
                             this.hack = cybernetyk.getHack();
                             this.lvl = cybernetyk.getLevel();
+                            myHP.add(cybernetyk.getHP());
                             //exp3[content.nomOfPlayerss()-1] = cybernetyk.getExp();
                             content.addPlayaScore(content.getPlayaNum(clientPortNumber), 0);
 
@@ -164,6 +174,8 @@ public class Server implements Runnable {
                             this.DAP = haker.getDAP();
                             this.hack = haker.getHack();
                             this.lvl = haker.getLevel();
+
+                            myHP.add(haker.getHP());
                          //   exp3[content.nomOfPlayerss()-1] = haker.getExp();
                             content.addPlayaScore(content.getPlayaNum(clientPortNumber), 0);
 
@@ -180,6 +192,9 @@ public class Server implements Runnable {
                             this.DAP = badAss.getDAP();
                             this.hack = badAss.getHack();
                             this.lvl = badAss.getLevel();
+
+                            myHP.add(badAss.getHP());
+
                           //  exp3[content.nomOfPlayerss()-1]= badAss.getExp();
                             content.addPlayaScore(content.getPlayaNum(clientPortNumber), 0);
 
@@ -295,6 +310,7 @@ public class Server implements Runnable {
                    // System.out.println("gracz na porcie o indexie: "+content.getPlayaNum(clientPortNumber)+ " ma "+String.valueOf(exp2)+" expa");
 
                     writer.println("Aktualnnie masz "+getPointsFromya(myPoints));
+                    writer.println("no i masz "+getPointsFromya(myHP)+" HP");
 
                    // ArrayList<ArrayList<Integer>> listaWyn =content.playersListOfskors ;
                    // listaWyn.get(content.listOfPlayers.indexOf(writer)).add(getPointsFromya(myPoints));
@@ -311,73 +327,40 @@ public class Server implements Runnable {
                     int num = rand.nextInt(nomOfQuests);
                     quests.getRandomQuest(writer, Quests.lokacje);
 
-//                    switch (num){
-//                        case 0:
-//                            quests.quest1(writer);
-//                            break;
-//                        case 1:
-//                            quests.quest2(writer);
-//                            break;
-//                        case 2:
-//                            quests.quest3(writer);
-//                            break;
-//                        case 3:
-//                            quests.quest4(writer);
-//                            break;
-//                        case 4:
-//                            quests.getRandomQuest(writer, Quests.lokacje);
-//                            break;
-//                    }
+
 
                     if ((messageFromClient = reader.readLine()) != null) {
                         if (messageFromClient.equals("q")) {
                             writer.println("Obecni gracze na serwerze "+ content.nomOfPlayerss());
-                            //Collections.sort(content.listOfScores);
+                            Collections.sort(content.listOfScores);
 
 //                            for(int ii=0; ii< content.nomOfPlayerss();ii++){
 //                                writer.println((ii+1)+" to gracz na porcie - "+content.getPlaya(ii) + " i ma "+content.getPlayaScore(ii)+" punktów exp");
 //                            }
-
+                        //    ArrayList<Integer> tymc = new ArrayList<Integer>();
                             for(int ii=0; ii< content.nomOfPlayerss();ii++){
+
                                 int x = getPointsFromya(content.playersListOfskors.get(ii));
+                                //tymc.add(x);
                                 writer.println((ii+1)+" to gracz na porcie - "+content.getPlaya(ii) + " i ma "+x+" punktów exp");
                             }
+//                            Collections.sort(tymc);
+//                            for(int ii=0; ii< content.nomOfPlayerss();ii++){
+//                                writer.println((ii+1)+" to gracz na porcie - "+content.getPlaya(ii) + " i ma "+tymc.gez+" punktów exp");
+//                            }
                         }
                         else {
-                            quests.getRandomQuestAns(writer, messageFromClient, quests, cybernetyk, haker, badass,content);
+                            boolean b=quests.getRandomQuestAns(writer, messageFromClient, quests, cybernetyk, haker, badass,content,myHP);
+                            if(b){
+                                myPoints.add(25);
+                            }
+                            showStats(writer,getPointsFromya(myHP),AP,hack,DAP,getPointsFromya(myPoints));
                             tura++;
 
                         }
 
-//                        switch (num){
-//                            case 0:
-//                                //quests.quest1(writer,22);
-//                                quests.quest1Ans(writer,messageFromClient,tura,quests);
-//                                tura++;
-//                                break;
-//                            case 1:
-//                               // quests.quest2(writer,22);
-//                                quests.quest2Ans(writer,messageFromClient,tura,quests);
-//                                tura++;
-//                                break;
-//                            case 2:
-//                                //quests.quest3(writer,22);
-//                                quests.quest3Ans(writer,messageFromClient,tura,quests);
-//                                tura++;
-//                                break;
-//                            case 3:
-//                                quests.quest4Ans(writer,messageFromClient,quests,cybernetyk,haker,badass);
-//                                tura++;
-//                                break;
-//                            case 4:
-//                                quests.getRandomQuestAns(writer,messageFromClient,quests,cybernetyk,haker,badass);
-//                                tura++;
-//                                break;
-//                        }
                     }
                 }
-
-
 
             }
             if(!gameLoop){
@@ -390,23 +373,6 @@ public class Server implements Runnable {
         }
     }
 
-//    static void bubbleSort(GameContent content) {
-//        //ArrayListarr = co
-//        int n = content.nomOfPlayerss();
-//        int temp = 0;
-//        for(int i=0; i < n; i++){
-//            for(int j=1; j < (n-i); j++){
-//                if(Integer.parseInt(content.getPlayaScore(j-1) ) > Integer.parseInt(content.getPlayaScore(j) )){
-//                    //swap elements
-//                    temp = Integer.parseInt(content.getPlayaScore(j-1) );
-//                    Integer.parseInt(content.getPlayaScore(j-1)) = Integer.parseInt(content.getPlayaScore(j) );
-//                    Integer.parseInt(content.getPlayaScore(j) ) = temp;
-//                }
-//
-//            }
-//        }
-//
-//    }
 
     void checkLvl(PrintWriter writ, boolean b1, boolean b2, boolean b3){
         if(exp2 >= nextLevel){
@@ -439,7 +405,7 @@ public class Server implements Runnable {
         }
     }
     boolean checkHP(){
-        if(HP <= 0){
+        if(getPointsFromya(myHP) <= 0){
 
             return true;
         }
@@ -448,8 +414,17 @@ public class Server implements Runnable {
     int getPointsFromya(ArrayList<Integer> a){
 
         int sum = 0;
-        for(int i = 1; i < a.size(); i++)
+        for(int i = 0; i < a.size(); i++)
             sum += a.get(i);
         return sum;
     }
+
+    void showStats (PrintWriter writer, int hp, int ap, int hac, int dap,int exp) {
+        writer.println("|---------------------------------------------|");
+        writer.println("|----HP----AP---HACK---DAP----|----exp: "+exp+"-----|");
+        writer.println("|---("+hp+")----"+ap+"----"+hac+"----"+dap+"-----|----LEVEL: "+lvl+"---|");
+        writer.println("|---------------------------------------------|");
+        writer.println(" ");
+    }
+
 }
