@@ -10,6 +10,9 @@ public class GameContent {
     ArrayList<Integer> listOfGamePorts = null;
     ArrayList<Integer> listOfScores = null;
     ArrayList<Quests> listOfQuests= null;
+    ArrayList<ArrayList<Integer>> playersListOfskors = new ArrayList<ArrayList<Integer>>();
+    int[] exp3;
+
     ArrayList<ArrayList<Integer>> clientsAppointment = new ArrayList<ArrayList<Integer>>();
     int options;
 
@@ -21,6 +24,15 @@ public class GameContent {
         this.listOfScores = listOfScores;
         this.listOfQuests = listOfQuests;
         this.options =1;
+        this.exp3 = new int[20];
+    }
+
+    int getPointsFromya(ArrayList<Integer> a){
+
+        int sum = 0;
+        for(int i = 1; i < a.size(); i++)
+            sum += a.get(i);
+        return sum;
     }
 
 
@@ -48,11 +60,11 @@ public class GameContent {
         return listOfGamePorts.size();
     }
 
-    void addPlaya(PrintWriter writer, int port, Quests q, int scr) {
+    void addPlaya(PrintWriter writer, int port, Quests q, int index) {
         listOfPlayers.add(writer);
         listOfQuests.add(q);
         listOfGamePorts.add(port);
-        listOfScores.add(scr);
+        listOfScores.add(exp3[index]);
     }
 
     void showRanking(PrintWriter writer) {
