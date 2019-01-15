@@ -308,7 +308,7 @@ public class Server implements Runnable {
                    // int tem = content.getPlayaScore(i);
                    // content.addPlayaScore(content.listOfGamePorts.indexOf(clientPortNumber), getPointsFromya(myPoints));
                    // System.out.println("gracz na porcie o indexie: "+content.getPlayaNum(clientPortNumber)+ " ma "+String.valueOf(exp2)+" expa");
-
+                    writer.println("Jest tura: "+tura);
                     writer.println("Aktualnnie masz "+getPointsFromya(myPoints));
                     writer.println("no i masz "+getPointsFromya(myHP)+" HP");
 
@@ -317,22 +317,18 @@ public class Server implements Runnable {
 
                     writer.println("");
                     writer.println("Wciśnij q by zobaczyć ranking");
+                    writer.println("Wciśnij e by wyzwać gracza na pojedynek");
                     writer.println("");
                     checkLvl(writer,cybernetyk,haker,badass);
                     if(checkHP()){
                         gameLoop=false;
                     }
-                    //writer.println("jest tura: "+tura);
-                    Random rand = new Random();
-                    int num = rand.nextInt(nomOfQuests);
-                    quests.getRandomQuest(writer, Quests.lokacje);
-
-
 
                     if ((messageFromClient = reader.readLine()) != null) {
+
                         if (messageFromClient.equals("q")) {
                             writer.println("Obecni gracze na serwerze "+ content.nomOfPlayerss());
-                            Collections.sort(content.listOfScores);
+                           // Collections.sort(content.listOfScores);
 
 //                            for(int ii=0; ii< content.nomOfPlayerss();ii++){
 //                                writer.println((ii+1)+" to gracz na porcie - "+content.getPlaya(ii) + " i ma "+content.getPlayaScore(ii)+" punktów exp");
@@ -342,12 +338,24 @@ public class Server implements Runnable {
 
                                 int x = getPointsFromya(content.playersListOfskors.get(ii));
                                 //tymc.add(x);
-                                writer.println((ii+1)+" to gracz na porcie - "+content.getPlaya(ii) + " i ma "+x+" punktów exp");
+                                writer.println("Gracz na porcie - "+content.getPlaya(ii) + " i ma "+x+" punktów exp");
                             }
 //                            Collections.sort(tymc);
 //                            for(int ii=0; ii< content.nomOfPlayerss();ii++){
 //                                writer.println((ii+1)+" to gracz na porcie - "+content.getPlaya(ii) + " i ma "+tymc.gez+" punktów exp");
 //                            }
+                        }
+                        else if(messageFromClient.equals("e")){
+
+                            writer.println("Lista graczy");
+                            for(int ii=0; ii< content.nomOfPlayerss();ii++){
+                                if(content.getPlaya(ii) != clientPortNumber) {
+                                    writer.println("Gracz na porcie - " + content.getPlaya(ii));
+                                }
+                            }
+                            writer.println("Podaj numer portu gracza którego chcesz zwyzywać");
+
+
                         }
                         else {
                             boolean b=quests.getRandomQuestAns(writer, messageFromClient, quests, cybernetyk, haker, badass,content,myHP);
@@ -355,11 +363,13 @@ public class Server implements Runnable {
                                 myPoints.add(25);
                             }
                             showStats(writer,getPointsFromya(myHP),AP,hack,DAP,getPointsFromya(myPoints));
-                            tura++;
+                            //tura++;
+                            quests.getRandomQuest(writer, Quests.lokacje);
 
                         }
 
                     }
+
                 }
 
             }

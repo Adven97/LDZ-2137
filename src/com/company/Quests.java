@@ -290,8 +290,22 @@ public class Quests {
             }
         }
 
-        else if (messageFromClient.equals("q")) {
-            writer.println("Tu bedzie ranking");
+        else if (messageFromClient.equals("e")) {
+
+//            writer.println("Lista graczy");
+//            for(int ii=0; ii< knt.nomOfPlayerss();ii++){
+//                if(knt.getPlaya(ii) != portt) {
+//                    writer.println("Gracz na porcie - " + knt.getPlaya(ii));
+//                }
+//            }
+//            writer.println("Podaj numer portu gracza którego chcesz zwyzywać");
+//            for(int ii=0; ii< knt.nomOfPlayerss();ii++){
+//                if(knt.getPlaya(ii) != portt) {
+//                    if(messageFromClient.equals(knt.getPlaya(ii))){
+//                        pvpIntro(writer);
+//                    }
+//                }
+//            }
         }
 
         else if (messageFromClient.equals("exit")) {
@@ -303,6 +317,11 @@ public class Quests {
         }
 
         return tem;
+    }
+
+    void pvpIntro(PrintWriter writer){
+        writer.println("Zwyzwałes gracza na pojedynek na kamień, papier, nożyce");
+        writer.println("Czekasz na odpowiedź");
     }
 
 
