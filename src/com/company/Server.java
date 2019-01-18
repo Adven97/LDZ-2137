@@ -100,6 +100,8 @@ public class Server implements Runnable {
             quests = content.listOfQuests.get(content.getPlayaNum(clientPortNumber)); /// moze to nie działa? - przerob na metode
             //exp2 = content.listOfScores.get(content.getPlayaNum(clientPortNumber));
             content.playersListOfskors.add(myPoints);
+            content.attacerWeapons.add("nic");
+            content.defendWeapons.add("nic");
             tura++;
             nomOfPlayas++;
 
@@ -298,8 +300,8 @@ public class Server implements Runnable {
                     }
 
                 }
-
-                if(tura >=9) {
+               // String bron2=null;
+                if(tura ==9) {
                     myPoints.add(10);
                     //for(int i=0; i< content.nomOfPlayerss();i++){
                    //     if(i==content.listOfPlayers.indexOf(writer)){
@@ -325,7 +327,13 @@ public class Server implements Runnable {
                     }
 
                     if ((messageFromClient = reader.readLine()) != null) {
-
+                        for(int ii=0; ii< content.nomOfPlayerss();ii++){
+                            if(content.getPlaya(ii) != clientPortNumber) {
+                                if(messageFromClient.equals(content.getPlaya(ii))){
+                                    quests.pvpIntro(writer);
+                                }
+                            }
+                        }
                         if (messageFromClient.equals("q")) {
                             writer.println("Obecni gracze na serwerze "+ content.nomOfPlayerss());
                            // Collections.sort(content.listOfScores);
@@ -353,10 +361,33 @@ public class Server implements Runnable {
                                     writer.println("Gracz na porcie - " + content.getPlaya(ii));
                                 }
                             }
-                            writer.println("Podaj numer portu gracza którego chcesz zwyzywać");
 
-
+                           // writer.println("Podaj numer portu gracza którego chcesz zwyzywać");
+                          tura=11;
+                            content.pvpGracze.add(0,clientPortNumber);
                         }
+
+                        else if(messageFromClient.equals("z")){
+                            writer.println("kamień");
+                            content.defendWeapons.add(content.getPlayaNum(clientPortNumber),"kamień");
+                            tura=13;
+                        }
+                        else if(messageFromClient.equals("x")){
+                            writer.println("papier");
+                            content.defendWeapons.add(content.getPlayaNum(clientPortNumber),"papier");
+                            tura=13;
+                        }
+                        else if(messageFromClient.equals("c")){
+                            writer.println("nożyce");
+                            content.defendWeapons.add(content.getPlayaNum(clientPortNumber),"nożyce");
+                            tura=13;
+                        }
+//                        for(int ii=0; ii< content.nomOfPlayerss();ii++){
+//                        else if(messageFromClient.contains(String.valueOf(content.getPlaya(ii)))) {
+//                                quests.pvpIntro(writer);
+//                            }
+//
+//                        }
                         else {
                             boolean b=quests.getRandomQuestAns(writer, messageFromClient, quests, cybernetyk, haker, badass,content,myHP);
                             if(b){
@@ -371,6 +402,175 @@ public class Server implements Runnable {
                     }
 
                 }
+
+                if(tura ==12) {
+                    if ((messageFromClient = reader.readLine()) != null) {
+                        for (int ii = 0; ii < content.nomOfPlayerss(); ii++) {
+                            if (messageFromClient.contains(String.valueOf(content.getPlaya(ii)))) {
+                                quests.pvpIntro(writer);
+                                content.listOfPlayers.get(ii).println("Ktos na porcie "+clientPortNumber+ " chce sie bić w stylu oldsqlowym");
+                                content.listOfPlayers.get(ii).println("Wybierz broń");
+                                content.listOfPlayers.get(ii).println("[z] - kamień");
+                                content.listOfPlayers.get(ii).println("[x] - papier");
+                                content.listOfPlayers.get(ii).println("[c] - nożyce");
+
+                                content.pvpGracze.add(1,content.getPlaya(ii));
+
+
+                                //tura++;
+                            }
+                            else {
+                                //tura=9;
+                            }
+
+                        }
+                    }
+
+                }
+                String bron=null;
+                if(tura ==11) {
+//                    for (int ii = 0; ii < content.nomOfPlayerss(); ii++) {
+//                        if (content.listOfPlayers.get(ii).equals(String.valueOf(content.getPlaya(ii)))) {
+//                            writer.println("ok lec fajt");
+//                            content.listOfPlayers.get(ii).println("ok lec fajt");
+//                        }
+//                    }
+                    writer.println("Wybierz broń");
+                    writer.println("[z] - kamień");
+                    writer.println("[x] - papier");
+                    writer.println("[c] - nożyce");
+                    if ((messageFromClient = reader.readLine()) != null) {
+                        if(messageFromClient.equals("z")){
+                            writer.println("kamień");
+                            bron ="wybrałeś kamień";
+                            content.attacerWeapons.add(content.getPlayaNum(clientPortNumber),"kamień");
+                        }
+                        else if(messageFromClient.equals("x")){
+                            writer.println("wybrałeś papier");
+                            bron ="papier";
+                            content.attacerWeapons.add(content.getPlayaNum(clientPortNumber),"papier");
+                        }
+                        else if(messageFromClient.equals("c")){
+                            writer.println("wybrałeś nożyce");
+                            bron ="nożyce";
+                            content.attacerWeapons.add(content.getPlayaNum(clientPortNumber),"nożyce");
+                        }
+                        writer.println("Podaj numer portu gracza którego chcesz zwyzywać");
+                        tura++;
+                    }
+
+                }
+//                if(tura ==12) {
+//                    writer.println("jest 12 tura");
+//                    for (int ii = 0; ii < content.nomOfPlayerss(); ii++) {
+//                    //    if (content.listOfPlayers.get(ii).equals(String.valueOf(content.getPlaya(ii)))) {
+//                            if (content.weapons.get(ii).equals("kamień")) {
+//                                content.listOfPlayers.get(ii).println("wybrałeś kamień");
+//                                //writer.println("przeciwnik wybrał kamień");
+//                            } else if (content.weapons.get(ii).equals("papier")) {
+//                                content.listOfPlayers.get(ii).println("wybrałeś papier");
+//                               // writer.println("przeciwnik wybrał papier");
+//                            } else if (content.weapons.get(ii).equals("nożyce")) {
+//                                content.listOfPlayers.get(ii).println("wybrałeś nożyce");
+//                              //  writer.println("przeciwnik wybrał nozyce");
+//                            }
+//                            else {
+//                                content.listOfPlayers.get(ii).println("ellloooo");
+//                                writer.println("pelllo22");
+//                            }
+//                        //}
+//                    }
+//                    tura++;
+//                }
+
+                if(tura ==13) {
+
+
+                    int playa1=0;
+                    int playa2=0;
+                    int inegoPort=content.getPlayaNum(content.pvpGracze.get(1));
+                    int twojPort=content.getPlayaNum(content.pvpGracze.get(0));
+
+                    writer.println("jest tura 13");
+                    //for (int ii = 0; ii < content.nomOfPlayerss(); ii++) {
+                      //  if (content.listOfPlayers.get(idInnego).equals(String.valueOf(content.getPlaya(idInnego)))) {
+                            if (content.defendWeapons.get(inegoPort).equals("kamień")) {
+                                  content.listOfPlayers.get(inegoPort).println("wybraliście kamień ");
+                                // writer.println("wybraliście kamień - remis");
+                                playa1 = 1;
+
+                            } else if (content.defendWeapons.get(inegoPort).equals("papier")) {
+                                content.listOfPlayers.get(inegoPort).println("wybraliście papier ");
+                                //  writer.println("wybraliście papier - remis");
+                                playa1 = 2;
+
+                            } else if (content.defendWeapons.get(inegoPort).equals("nożyce")) {
+                                   content.listOfPlayers.get(inegoPort).println("wybraliście nożyce ");
+                                // writer.println("wybraliście nożyce - remis");
+                                playa1 = 3;
+                            }
+//                    for (int ii = 0; ii < content.pvpGracze.size(); ii++) {
+//                        if(ii != inegoPort){
+//                            twojPort=ii;
+//                            break;
+//                        }
+//                    }
+
+                    if (content.attacerWeapons.get(twojPort).equals("kamień")) {
+                        content.listOfPlayers.get(twojPort).println("wybraliście kamień 2");
+                        // writer.println("wybraliście kamień - remis");
+                        playa2 = 1;
+
+                    } else if (content.attacerWeapons.get(twojPort).equals("papier")) {
+                        content.listOfPlayers.get(twojPort).println("wybraliście papier 2");
+                        //  writer.println("wybraliście papier - remis");
+                        playa2 = 2;
+
+                    } else if (content.attacerWeapons.get(twojPort).equals("nożyce")) {
+                        content.listOfPlayers.get(twojPort).println("wybraliście nożyce 2");
+                        // writer.println("wybraliście nożyce - remis");2\
+                        playa2 = 3;
+                    }
+
+                    //  }
+                  //  }
+
+//                    for (int x = 0; x < content.nomOfPlayerss(); x++) {
+//                        //   if (content.listOfPlayers.get(ii).equals(String.valueOf(content.getPlaya(ii)))) {
+//                        if (content.attacerWeapons.get(x).equals("kamień") ) {
+//                            playa2=1;
+//                           // content.listOfPlayers.get(x).println("wybraliście kamień - remis");
+//                            // writer.println("wybraliście kamień - remis");
+//
+//                        } else if (content.attacerWeapons.get(x).equals("papier") ) {
+//                           // content.listOfPlayers.get(x).println("wybraliście papier - remis");
+//                            //  writer.println("wybraliście papier - remis");
+//                            playa2=2;
+//
+//                        } else if (content.attacerWeapons.get(x).equals("nożyce") ) {
+//                           // content.listOfPlayers.get(x).println("wybraliście nożyce - remis");
+//                            // writer.println("wybraliście nożyce - remis");
+//                            playa2=3;
+//                        }
+//                        else {
+//                            content.listOfPlayers.get(x).println("to sie dorobi xd");
+//                        }
+//                    }
+
+                    if(playa1 == playa2){
+                        //writer.println("remis , bo wyzwany ma "+playa1+" a wyzywający ma "+playa2);
+                        content.listOfPlayers.get(inegoPort).println("remis , bo wyzwany ma "+playa1+" a wyzywający ma "+playa2);
+                        content.listOfPlayers.get(twojPort).println("remis , bo wyzwany ma "+playa1+" a wyzywający ma "+playa2);
+                    }
+                    else {
+                       // writer.println(" nie remis , bo wyzwany ma "+playa1+" a wyzywający ma "+playa2);
+                        content.listOfPlayers.get(inegoPort).println(" NIE remis , bo wyzwany ma "+playa1+" a wyzywający ma "+playa2);
+                        content.listOfPlayers.get(twojPort).println(" NIE remis , bo wyzwany ma "+playa1+" a wyzywający ma "+playa2);
+                    }
+
+                    tura++;
+                }
+
 
             }
             if(!gameLoop){

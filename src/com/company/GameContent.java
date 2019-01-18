@@ -14,6 +14,11 @@ public class GameContent {
     ArrayList<Integer> listOfScores = null;
     ArrayList<Quests> listOfQuests= null;
     ArrayList<ArrayList<Integer>> playersListOfskors = new ArrayList<ArrayList<Integer>>();
+    ArrayList<String> attacerWeapons = new ArrayList<String>();
+    ArrayList<String> defendWeapons = new ArrayList<String>();
+
+    ArrayList<Integer> pvpGracze = new ArrayList<Integer>();
+   // ArrayList<String> weapons = new ArrayList<String>();
     int[] exp3;
 
     ArrayList<ArrayList<Integer>> clientsAppointment = new ArrayList<ArrayList<Integer>>();

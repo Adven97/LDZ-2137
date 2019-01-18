@@ -323,6 +323,10 @@ public class Quests {
         writer.println("Zwyzwałes gracza na pojedynek na kamień, papier, nożyce");
         writer.println("Czekasz na odpowiedź");
     }
+    void pvpIntro2(PrintWriter writer){
+        writer.println("Zwyzłałes go i zekasz na odp xD");
+
+    }
 
 
     int ileZycia(int ludzie, int druty, int andki){
