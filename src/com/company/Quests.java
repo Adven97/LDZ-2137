@@ -19,30 +19,31 @@ public class Quests {
             "w zrujnowanym pałacu Shillera", "W Zgierzu", "W starej opuszczonej zajezdni tramwajowej, na Nowoczesnym dworcu Łódź Kaliska",
             "na Post Bałuckim Runku implantów"};
 
-
-    void showStats (PrintWriter writer, int hp, int ap, int hac, int dap, GameContent knt ) {
-        writer.println("|---------------------------------------------|");
-        writer.println("|----HP----AP---HACK---DAP----|----exp: "+909+"-----|");
-        writer.println("|---("+hp+")----"+ap+"----"+hac+"----"+dap+"-----|----LEVEL: "+lvl+"---|");
-        writer.println("|---------------------------------------------|");
-        writer.println(" ");
-    }
+//
+//    void showStats (PrintWriter writer, int hp, int ap, int hac, int dap, GameContent knt ) {
+//        writer.println("|---------------------------------------------|");
+//        writer.println("|----HP----AP---HACK---DAP----|----exp: "+909+"-----|");
+//        writer.println("|---("+hp+")----"+ap+"----"+hac+"----"+dap+"-----|----LEVEL: "+lvl+"---|");
+//        writer.println("|---------------------------------------------|");
+//        writer.println(" ");
+//    }
 
     void quest1 (PrintWriter writer){
 
-        writer.println("Spotykasz przed zahirem grupkę pijanych studentów");
-        writer.println("Jeden proponuje ci byś zabił jednego z profesorów");
+        writer.println("Spotykasz przed Kebabem grupkę pijanych janyszy");
+        writer.println("Jeden proponuje ci byś zabił sąsiada konfidenta i złodzieja");
         writer.println("Co robisz?");
         writer.println(" [1] Zgadzam się");
         writer.println(" [2] Nie zgadzam się");
     }
-    void quest1Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt){
+    void quest1Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
         if (messageFromClient.equals("1")) {
             writer.println("Zabiłes niewinnego człowieka, zabrał ci 2 HP");
-            Server.HP -=2;
+            myHP.add(-2);
           //  knt.exp3[knt.nomOfPlayerss()-1]+=1;
+            myPoints.add(2);
 
-            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+           // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             // content.quest2(writer);
             tura++;
         }
@@ -57,8 +58,8 @@ public class Quests {
             writer.println("Do widzenia");
         }
         else {
-            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
-            //content.beginingOfTheGame(writer);
+            writer.println("Polecenie niezrozumiałe, za kare kibole spuszczają ci łomot");
+            myHP.add(-8);
         }
     }
 
@@ -71,19 +72,17 @@ public class Quests {
 
     }
 
-    void quest2Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt){
+    void quest2Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
         if (messageFromClient.equals("1")) {
             writer.println("Było ciężko, ale zdołałes ich pokonac, zabrał ci 20 HP");
-            Server.HP -=20;
-            knt.exp3[knt.nomOfPlayerss()-1]+=2;
-            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+            myHP.add(-20);
+            myPoints.add(4);
+            //content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             // content.quest3(writer);
             tura++;
         }
         else if (messageFromClient.equals("2")) {
             writer.println("nuuuda nic sie nie dzieje");
-            //  content.showStats(writer,hp,ap, hc, dap);
-            // content.quest3(writer);
             tura++;
         }
 
@@ -91,7 +90,8 @@ public class Quests {
             writer.println("Do widzenia");
         }
         else {
-            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
+            writer.println("Polecenie niezrozumiałe, za kare kibole spuszczają ci łomot");
+            myHP.add(-10);
         }
     }
 
@@ -105,12 +105,12 @@ public class Quests {
         writer.println(" [4] Uciekam");
 
     }
-    void quest3Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt){
+    void quest3Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
         if (messageFromClient.equals("1")) {
             writer.println("Nie było ciężko, zostałeś postrzelony ale zdołałes ich pokonac, zabrali ci 16 HP");
-            Server.HP -=16;
-            knt.exp3[knt.nomOfPlayerss()-1]+=2;
-            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+            myHP.add(-16);
+            myPoints.add(4);
+          //  content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             // content.quest4(writer);
             tura++;
         }
@@ -118,9 +118,9 @@ public class Quests {
             writer.println("Zostałeś postrzelony wielokrotnie");
             writer.println("Zdołałes pokonac 2 androidów i 1 człowieka,pozostali uciekli");
             writer.println("W sumie zabrali ci 22 HP");
-            Server.HP -=22;
-            knt.exp3[knt.nomOfPlayerss()-1]+=2;
-            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+            myHP.add(-22);
+            myPoints.add(4);
+         //   content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             //  content.quest4(writer);
             tura++;
         }
@@ -129,9 +129,9 @@ public class Quests {
             writer.println("Ledwo udało ci się ujść z życiem");
             writer.println("Zdołałes pokonac 2 policjantów, 3 androidów i 1 człowieka,pozostali uciekli");
             writer.println("W sumie zabrali ci 56 HP");
-            Server.HP -=56;
-            knt.exp3[knt.nomOfPlayerss()-1]+=4;
-            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+            myHP.add(-56);
+            myPoints.add(8);
+           // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             // content.quest4(writer);
             tura++;
         }
@@ -139,8 +139,8 @@ public class Quests {
             writer.println("Z nudów poszedłeś na kebaba");
             writer.println("Wziąłes super mega rollo");
             writer.println("Twoje hp wzrosło o 13");
-            Server.HP +=13;
-            content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+            myHP.add(13);
+         //   content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             // content.quest4(writer);
             tura++;
         }
@@ -149,8 +149,8 @@ public class Quests {
             writer.println("Do widzenia");
         }
         else {
-            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
-            //content.beginingOfTheGame(writer);
+            writer.println("Polecenie niezrozumiałe, za kare kibole spuszczają ci łomot");
+            myHP.add(-12);
         }
     }
 
@@ -164,39 +164,39 @@ public class Quests {
         writer.println(" [2] Uciekam");
 
     }
-    void quest4Ans(PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3, GameContent knt){
+    void quest4Ans(PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
         if (messageFromClient.equals("1")) {
             if(b1) {
                 writer.println("Nie było ciężko, lekko cie pokiereszowali");
                 writer.println(" -5 HP");
-                Server.HP -= 5;
-                knt.exp3[knt.nomOfPlayerss()-1]+=1;
+                myHP.add(-5);
+                myPoints.add(2);
               //  content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b2) {
                 writer.println("Nie było ciężko, ale jeden cie ugryzł w noge");
                 writer.println(" -15 HP");
-                Server.HP -= 15;
+                myHP.add(-15);
               //  knt.exp3[knt.nomOfPlayerss()-1]+=1;
                // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b3) {
                 writer.println("Nie było ciężko, Nie odniosłeś żadnych obrażeń, lika BOSS");
                // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
-                knt.exp3[knt.nomOfPlayerss()-1]+=2;
+                myPoints.add(4);
             }
         }
         else if (messageFromClient.equals("2")) {
             if(b1 || b2) {
-                writer.println("Niby udało ci się uciec, ale niestety poślizgnąłeś się i upadłeś na twarz");
+                writer.println("Niby udało ci się uciec, ale niestety poślizgnąłeś się i upadłeś na twarz xD");
                 writer.println(" -6 HP");
-                Server.HP -= 6;
+                myHP.add(-6);
               //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
             if (b3) {
                 writer.println("Uciekając znalazłeś paczke leków");
                 writer.println(" +15 HP");
-                Server.HP += 15;
+                myHP.add(-15);
               //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
         }
@@ -205,8 +205,8 @@ public class Quests {
             writer.println("Do widzenia");
         }
         else {
-            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
-            //content.beginingOfTheGame(writer);
+            writer.println("Polecenie niezrozumiałe, za kare kibole spuszczają ci łomot");
+            myHP.add(-15);
         }
     }
 
@@ -245,14 +245,14 @@ public class Quests {
              //   knt.exp3[knt.nomOfPlayerss()-1]+=2;
                 //content.addPlayaScore(content.getPlayaNum(String.valueOf(clientPortNumber)), String.valueOf(exp));
                 tem=true;
-                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+               // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b2) {
                 writer.println("Dobrze rozwaliłes tych andków, z pozostałymi nie było tak łatwo");
                 writer.println(" -"+ileZycia(4, 2, 1)+" HP");
                 myHP.add(ileZycia(4, 2, 1));
-                knt.exp3[knt.nomOfPlayerss()-1]+=2;
-                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+              //  knt.exp3[knt.nomOfPlayerss()-1]+=2;
+               // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
                 tem=true;
             }
             if(b3) {
@@ -260,7 +260,7 @@ public class Quests {
                 writer.println(" -"+ileZycia(1, 2, 4)+" HP");
                 myHP.add(ileZycia(1, 2, 4));
                 //knt.exp3[knt.nomOfPlayerss()-1]+=2;
-                content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
+              //  content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
                 tem=true;
             }
         }
@@ -271,63 +271,41 @@ public class Quests {
             if(b1) {
                 writer.println("Udało ci sie uciec, po drodze znalazłeś zajefajny implant");
                 writer.println(" +"+num+" HP");
-                Server.HP += num;
-                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
+                myHP.add(num);
+              //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
 
             if(b2) {
                 writer.println("Udało ci sie uciec, poszedłes do CyberMcDonalda się najeść");
                 writer.println(" +"+num+" HP");
-                Server.HP += num;
-                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
+                myHP.add(num);
+              //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
             if (b3) {
                 num+=2;
                 writer.println("Ty farcie! Uciekając znalazłeś paczke leków");
                 writer.println(" +"+num+" HP");
-                Server.HP += num;
-                content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
+                myHP.add(num);
+               // content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
         }
 
-        else if (messageFromClient.equals("e")) {
-
-//            writer.println("Lista graczy");
-//            for(int ii=0; ii< knt.nomOfPlayerss();ii++){
-//                if(knt.getPlaya(ii) != portt) {
-//                    writer.println("Gracz na porcie - " + knt.getPlaya(ii));
-//                }
-//            }
-//            writer.println("Podaj numer portu gracza którego chcesz zwyzywać");
-//            for(int ii=0; ii< knt.nomOfPlayerss();ii++){
-//                if(knt.getPlaya(ii) != portt) {
-//                    if(messageFromClient.equals(knt.getPlaya(ii))){
-//                        pvpIntro(writer);
-//                    }
-//                }
-//            }
-        }
 
         else if (messageFromClient.equals("exit")) {
             writer.println("Do widzenia");
         }
 
         else {
-            writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
+            writer.println("Utrata kolejki ");
         }
 
         return tem;
     }
 
     void pvpIntro(PrintWriter writer){
-        writer.println("Zwyzwałes gracza na pojedynek na kamień, papier, nożyce");
+        writer.println("Zwyzwałes gracza na pojedynek na kamień, papier, nożyce na MEssEngerZe");
         writer.println("Czekasz na odpowiedź");
     }
-    void pvpIntro2(PrintWriter writer){
-        writer.println("Zwyzłałes go i zekasz na odp xD");
-
-    }
-
 
     int ileZycia(int ludzie, int druty, int andki){
         int ileZdrowiaZabrali=0;
