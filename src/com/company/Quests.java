@@ -6,18 +6,18 @@ import java.util.Random;
 
 //import static com.company.Server.exp2;
 //import static com.company.Server.exp3;
-import static com.company.Server.lvl;
+//import static com.company.Server.lvl;
 //import static com.company.Server.myPoints;
 
 public class Quests {
 
-    static int nomOfQuests =5;
+  //  static int nomOfQuests =5;
     static int ileLudzi, ileDruciarzy, ileAndroid;
     static String[] lokacje ={"na Piotrkowskiej", "na Wólczańskiej", "na Al. Politechniki", "na Zachodniej", "na Zgierskiej", "na Limance",
-            "na Widzewie", "na Radogoszczu","na ulicy 1-go Korpusu Pancernego Wojska Polskiego", "na Zielonej",
-            "w opuszczonym Parku Poniatowskiego", "w opuszczonej sukcesji", "w postapokaliptycznej Manufakturze", "w Akademiku",
-            "w zrujnowanym pałacu Shillera", "W Zgierzu", "W starej opuszczonej zajezdni tramwajowej, na Nowoczesnym dworcu Łódź Kaliska",
-            "na Post Bałuckim Runku implantów"};
+            "na Widzewie", "na Radogoszczu","na ulicy 1-go Korpusu Pancernego Wojska Polskiego", "na Zielonej", "na odnowionym Księżnym Młonie",
+            "w opuszczonym Parku Poniatowskiego", "w opuszczonej sukcesji", "w postapokaliptycznej Manufakturze", "na 166 piętrze akademika",
+            "w zrujnowanym pałacu Shillera", "W Zgierskiej metropolii", "W starej opuszczonej zajezdni tramwajowej", "na nowoczesnym dworcu Łódź Kaliska",
+            "na PostBałuckim Runku implantów", "na stadionie Widzewa", "na stadionie ŁKSu", "w Chinatown"};
 
 //
 //    void showStats (PrintWriter writer, int hp, int ap, int hac, int dap, GameContent knt ) {
@@ -157,8 +157,8 @@ public class Quests {
     void quest4 (PrintWriter writer) {
         writer.println("Udałeś się na Aleje Politechniki");
         writer.println("100 lat doszło tu do wybuchu reaktora termojądrowego");
-        writer.println("Cała okolica jest strefą zakazaną, opanowana przez zombie");
-        writer.println("Właśnie atakuje cie horda 12 Zombie");
+        writer.println("Cała okolica w promieniu 100 metrów jest strefą zakazaną");
+        writer.println("Właśnie atakuje cie horda Zombie");
         writer.println("Co robisz?");
         writer.println(" [1] Atakuję");
         writer.println(" [2] Uciekam");
@@ -215,7 +215,7 @@ public class Quests {
 
         Random rand = new Random();
         int num = rand.nextInt(lokacje.length);
-        if(num == 11) {
+        if(num == 20 || num==21) {
             ileLudzi = 30;
             ileDruciarzy = 25;
             ileAndroid = 25;
@@ -240,7 +240,7 @@ public class Quests {
             if(b1) {
 
                 writer.println("Druciarze to dla ciebie pestka, gorzej z ludzmi i androidami");
-                writer.println(" -"+ileZycia(4, 1, 2)+" HP");
+                writer.println(" "+ileZycia(4, 1, 2)+" HP");
                 myHP.add(ileZycia(4, 1, 2));
              //   knt.exp3[knt.nomOfPlayerss()-1]+=2;
                 //content.addPlayaScore(content.getPlayaNum(String.valueOf(clientPortNumber)), String.valueOf(exp));
@@ -249,7 +249,7 @@ public class Quests {
             }
             if(b2) {
                 writer.println("Dobrze rozwaliłes tych andków, z pozostałymi nie było tak łatwo");
-                writer.println(" -"+ileZycia(4, 2, 1)+" HP");
+                writer.println(" "+ileZycia(4, 2, 1)+" HP");
                 myHP.add(ileZycia(4, 2, 1));
               //  knt.exp3[knt.nomOfPlayerss()-1]+=2;
                // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
@@ -257,7 +257,7 @@ public class Quests {
             }
             if(b3) {
                 writer.println("Poradziłes sobie z ludzmi, niestety z pozostałymi nie było łatwo");
-                writer.println(" -"+ileZycia(1, 2, 4)+" HP");
+                writer.println(" "+ileZycia(1, 2, 4)+" HP");
                 myHP.add(ileZycia(1, 2, 4));
                 //knt.exp3[knt.nomOfPlayerss()-1]+=2;
               //  content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
@@ -329,5 +329,4 @@ public class Quests {
             sum += a.get(i);
         return sum;
     }
-
 }

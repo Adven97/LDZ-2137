@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static com.company.Server.lvl;
+//import static com.company.Server.lvl;
 
 public class GameContent {
 

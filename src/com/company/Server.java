@@ -13,7 +13,7 @@ import java.net.BindException;
 import java.util.Collections;
 import java.util.Random;
 
-import static com.company.Quests.nomOfQuests;
+//import static com.company.Quests.nomOfQuests;
 
 public class Server implements Runnable {
 
@@ -322,7 +322,8 @@ public class Server implements Runnable {
 
 
                         writer.println("");
-                        writer.println("Wciśnij q by zobaczyć graczy na serwerze");
+                        writer.println("Wciśnij w by zobaczyć graczy na serwerze");
+                        writer.println("Wciśnij q by wejść w chat");
                         writer.println("Wciśnij e by wyzwać gracza na pojedynek");
                         writer.println("");
 
@@ -333,7 +334,7 @@ public class Server implements Runnable {
                                 }
                             }
                         }
-                        if (messageFromClient.equals("q")) {
+                        if (messageFromClient.equals("w")) {
                             writer.println("Obecni gracze na serwerze "+ content.nomOfPlayerss());
                            // Collections.sort(content.listOfScores);
 
@@ -346,9 +347,13 @@ public class Server implements Runnable {
                             }
                         }
 
+                        else if(messageFromClient.equals("q")){
+                            writer.println("Okno chatu, wpisz 'q' by wyjść");
+                          tura=22;
+                        }
                         else if(messageFromClient.equals("e")){
 
-                          tura=11;
+                            tura=11;
                             content.pvpGracze.add(0,clientPortNumber);
                         }
                         else if(content.pvpGracze.size()==2) {
@@ -545,6 +550,22 @@ public class Server implements Runnable {
                         tura=9;
                     }
 
+                }
+                if (tura == 22) {
+
+                    if ((messageFromClient = reader.readLine()) != null) {
+                        if(messageFromClient.equals("q")){
+
+                            quests.getRandomQuest(writer, Quests.lokacje);
+                            tura=9;
+                        }
+                        for(int ii=0; ii< content.nomOfPlayerss();ii++){
+                            if(content.getPlaya(ii) == clientPortNumber){
+                                continue;
+                            }
+                            content.listOfPlayers.get(ii).println("[ "+clientPortNumber+" ] "+messageFromClient);
+                        }
+                    }
                 }
 
 
