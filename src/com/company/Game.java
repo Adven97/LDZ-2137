@@ -44,12 +44,7 @@ public class Game implements Runnable {
                     if(messageToServer.equals("exit")){
                         System.exit(1);
                     }
-//                    else if(messageToServer.equals("z")){
-//                        writer.println("Zaakceptowałes walke");
-//                    }
-//                    else if(messageToServer.equals("x")){
-//                        writer.println("speniales");
-//                    }
+
                 }
             }
         }
@@ -66,7 +61,11 @@ public class Game implements Runnable {
             while (true) {
                 if ((messageFromServer = serverReader.readLine()) != null) {
                     System.out.println(messageFromServer);
+                    if(messageFromServer.equals("Umarłes, koniec gry, do widzenia! było nie umierać!")){
+                        System.exit(1);
+                    }
                 }
+
             }
         }
         catch (IOException e) {
