@@ -28,6 +28,40 @@ public class Quests {
 //        writer.println(" ");
 //    }
 
+
+    void showStats (PrintWriter writer, int hp, int ap, int hac, int dap,int exp,int lvl) {
+        writer.println("|---------------------------------------------|");
+        writer.println("|----HP----AP---HACK---DAP----|----exp: "+exp+"-----|");
+        writer.println("|---("+hp+")----"+ap+"----"+hac+"----"+dap+"-----|----LEVEL: "+lvl+"---|");
+        writer.println("|---------------------------------------------|");
+        writer.println(" ");
+    }
+
+
+
+    void quest0Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
+
+            if (messageFromClient.equals("1")) {
+                writer.println("Pokonałes przeciwników, lecz oni zabrali ci 12 HP");
+                myHP.add(-12);
+                myPoints.add(2);
+               // showStats(writer,getPointsFromya(myHP),AP,hack,DAP,getPointsFromya(myPoints),lvl);
+
+            }
+            else if (messageFromClient.equals("2")) {
+                writer.println("nuuuda nic sie nie dzieje");
+              //  showStats(writer,getPointsFromya(myHP),AP,hack,DAP,getPointsFromya(myPoints),lvl);
+
+            }
+            else if (messageFromClient.equals("exit")) {
+                writer.println("Do widzenia");
+            }
+            else {
+                writer.println("Polecenie niezrozumiałe, spróbuj ponownie");
+                tura=4;
+            }
+
+    }
     void quest1 (PrintWriter writer){
 
         writer.println("Spotykasz przed Kebabem grupkę pijanych janyszy");
@@ -189,14 +223,14 @@ public class Quests {
         else if (messageFromClient.equals("2")) {
             if(b1 || b2) {
                 writer.println("Niby udało ci się uciec, ale niestety poślizgnąłeś się i upadłeś na twarz xD");
-                writer.println(" -6 HP");
-                myHP.add(-6);
+                writer.println(" -5 HP");
+                myHP.add(-5);
               //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
             if (b3) {
                 writer.println("Uciekając znalazłeś paczke leków");
-                writer.println(" +15 HP");
-                myHP.add(-15);
+                writer.println(" +13 HP");
+                myHP.add(13);
               //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
         }
@@ -234,8 +268,9 @@ public class Quests {
 
     }
 
-    boolean getRandomQuestAns (PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3, GameContent knt,ArrayList<Integer> myHP) {
+    boolean getRandomQuestAns (PrintWriter writer,String messageFromClient, boolean b1, boolean b2, boolean b3, ArrayList<Integer> myHP,int maxx) {
         boolean tem=false;
+        int tmax =maxx-100;
         if (messageFromClient.equals("1")) {
             if(b1) {
 
@@ -271,21 +306,29 @@ public class Quests {
             if(b1) {
                 writer.println("Udało ci sie uciec, po drodze znalazłeś zajefajny implant");
                 writer.println(" +"+num+" HP");
-                myHP.add(num);
+                if(getPointsFromyaa(myHP) <=tmax){
+                    myHP.add(num);
+                    writer.println("masz punktuw: "+getPointsFromyaa(myHP));
+                }
+
               //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
 
             if(b2) {
                 writer.println("Udało ci sie uciec, poszedłes do CyberMcDonalda się najeść");
                 writer.println(" +"+num+" HP");
-                myHP.add(num);
+                if(getPointsFromyaa(myHP) <tmax){
+                    myHP.add(num);
+                }
               //  content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
             if (b3) {
                 num+=2;
                 writer.println("Ty farcie! Uciekając znalazłeś paczke leków");
                 writer.println(" +"+num+" HP");
-                myHP.add(num);
+                if(getPointsFromyaa(myHP) < tmax){
+                    myHP.add(num);
+                }
                // content.showStats(writer, Server.HP, Server.AP, Server.hack, Server.DAP,knt);
             }
         }
@@ -322,10 +365,10 @@ public class Quests {
         return ileZdrowiaZabrali*(-1);
     }
 
-    int getPointsFromya(ArrayList<Integer> a){
+    int getPointsFromyaa(ArrayList<Integer> a){
 
         int sum = 0;
-        for(int i = 1; i < a.size(); i++)
+        for(int i = 0; i < a.size(); i++)
             sum += a.get(i);
         return sum;
     }

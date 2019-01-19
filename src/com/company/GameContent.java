@@ -22,7 +22,7 @@ public class GameContent {
     int[] exp3;
 
     ArrayList<ArrayList<Integer>> clientsAppointment = new ArrayList<ArrayList<Integer>>();
-    int options;
+  //  int options;
 
     GameContent(ArrayList<PrintWriter> listOfPlayers, ArrayList<Integer> listOfGamePorts, ArrayList<Integer> listOfScores,
                 ArrayList<Quests> listOfQuests) {
@@ -31,18 +31,9 @@ public class GameContent {
         this.listOfGamePorts = listOfGamePorts;
         this.listOfScores = listOfScores;
         this.listOfQuests = listOfQuests;
-        this.options =1;
+        //this.options =1;
         this.exp3 = new int[20];
     }
-
-    int getPointsFromya(ArrayList<Integer> a){
-
-        int sum = 0;
-        for(int i = 1; i < a.size(); i++)
-            sum += a.get(i);
-        return sum;
-    }
-
 
     int getPlaya(int i) {
         return listOfGamePorts.get(i);
@@ -52,17 +43,17 @@ public class GameContent {
         return listOfGamePorts.indexOf(port);
     }
 
-    int getPlayaScore(int i) {
-        return listOfScores.get(i);
-    }
-
-//    void setPlayaScore(int i, String st) {
-//        listOfScores.set(i,st);
+//    int getPlayaScore(int i) {
+//        return listOfScores.get(i);
 //    }
+//
+////    void setPlayaScore(int i, String st) {
+////        listOfScores.set(i,st);
+////    }
 
-    void addPlayaScore(int i,int st) {
-        listOfScores.add(i,st);
-    }
+//    void addPlayaScore(int i,int st) {
+//        listOfScores.add(i,st);
+//    }
 
     int nomOfPlayerss(){
         return listOfGamePorts.size();
@@ -75,11 +66,11 @@ public class GameContent {
         listOfScores.add(exp3[index]);
     }
 
-    void showRanking(PrintWriter writer) {
-        for (int i = 0; i < listOfPlayers.size(); i++) {
-            writer.println((i+1)+" - "+listOfPlayers.get(i));
-        }
-    }
+//    void showRanking(PrintWriter writer) {
+//        for (int i = 0; i < listOfPlayers.size(); i++) {
+//            writer.println((i+1)+" - "+listOfPlayers.get(i));
+//        }
+//    }
 
     void showPlot(PrintWriter writer){
         writer.println("Jest rok 2137");
@@ -104,7 +95,7 @@ public class GameContent {
         writer.println("Jesteś cybernetykiem, mieszkasz w Łodzi całe swoje życie");
         writer.println("Ta misja to dla ciebie sprawa osobista");
         writer.println("Dzięki wielu implantom zabijanie podobnych do ciebie druciarzy to łatwizna");
-        writer.println("-------Wciśnij 1 + Enter aby kontynuować--------");
+        writer.println("-------Wciśnij dowolny przycisk + Enter aby kontynuować--------");
         writer.println("-----napisz 'exit' i wciśnij enter by wyjść------");
     }
 
@@ -112,26 +103,35 @@ public class GameContent {
         writer.println("Jesteś wybitnym hakerem z Tokjo, twoja specjalizacja to zabijanie androidów");
         writer.println("10 lat temu, android zamordował twoją ukochaną");
         writer.println("Od tamtej pory robisz wszystko by unicestwić wszystkie androidy z powierzchni Ziemi");
-        writer.println("-------Wciśnij 1 aby + Enter kontynuować--------");
+        writer.println("-------Wciśnij dowolny przycisk + Enter aby kontynuować--------");
         writer.println("-----napisz 'exit' i wciśnij enter by wyjść------");
     }
 
     void badassBackstory(PrintWriter writer){
         writer.println("Jesteś płatnym najemnikiem z hAmeryki, zabijanie złoli to dla ciebie nie tylko praca, ale też i świetna zabawa");
         writer.println("Twoja specjalizacja to ludzie");
-        writer.println("-------Wciśnij 1 + Enter aby kontynuować--------");
+        writer.println("-------Wciśnij dowolny przycisk + Enter aby kontynuować--------");
         writer.println("-----napisz 'exit' i wciśnij enter by wyjść------");
 
     }
 
     void startCampaign(PrintWriter writer){
-        options=2;
+       // options=2;
         writer.println("Piątek, godzina 19 poszedłeś na patrol na Piotrkowską");
         writer.println("Widzisz 5 osobowy gang składający się z ludzi");
         writer.println("Próbują sprzedać heroinę 12 latkowi");
         writer.println("Co robisz?");
         writer.println(" [1] Podchodzę i walczę");
         writer.println(" [2] Omijam i idę dalej");
+    }
+
+    void infoBox(PrintWriter writer){
+        writer.println("");
+        writer.println("Wciśnij w by zobaczyć graczy na serwerze");
+        writer.println("Wciśnij q by wejść w chat");
+        writer.println("Wciśnij e by wyzwać gracza na pojedynek");
+        writer.println("Napisz 'exit' i wciśnij enter by wyjść");
+        writer.println("");
     }
 
     }
