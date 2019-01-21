@@ -27,14 +27,19 @@ public class Game implements Runnable {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
             System.out.println("Witamy w grze ŁóDź 2137");
-            System.out.println("Proszę podać 4 cyfrowy numer portu");
+            System.out.println("Proszę podać numer portu");
             int clientPort = Integer.parseInt(reader.readLine());
-
+            if(clientPort == 2137){
+                System.out.println("Nie mozna sie polaczyc z tym portem, przydzielilismy ci 2138");
+                System.out.println("");
+                clientPort = 2138;
+            }
             Socket clientSocket = new Socket(hostName, serverPort);
             ServerSocket serverSocket = new ServerSocket(clientPort);
 
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
             writer.println(clientPort);
+
 
             Thread clientThread = new Thread(new Game(serverSocket.accept()));
             clientThread.start();

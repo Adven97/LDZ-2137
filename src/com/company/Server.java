@@ -33,6 +33,7 @@ public class Server implements Runnable {
     int MAXHP;
     //static int[] exp3;
      int nextLevel;
+     int spawn;
     int nomOfPlayas;
      boolean gameLoop;
     //static int[] exp3;
@@ -61,35 +62,6 @@ public class Server implements Runnable {
     }
     public static void main(String[] args) throws IOException {
         loadXMLFile();
-//        try {
-//        File fXmlFile = new File("/Users/mkyong/staff.xml");
-//        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-//        Document doc = dBuilder.parse(fXmlFile);
-//        //optional, but recommended
-//        //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-//        doc.getDocumentElement().normalize();
-//        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-//        NodeList nList = doc.getElementsByTagName("staff");
-//        System.out.println("----------------------------");
-//
-//        for (int temp = 0; temp < nList.getLength(); temp++) {
-//            Node nNode = nList.item(temp);
-//            System.out.println("Current Element :" + nNode.getNodeName());
-//            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-//                Element eElement = (Element) nNode;
-//                System.out.println("Staff id : " + eElement.getAttribute("id"));
-//                System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
-//                System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
-//                System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
-//                System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
-//
-//            }
-//        }
-//    } catch (Exception e) {
-//        e.printStackTrace();
-//    }
-
 
         ArrayList<PrintWriter> wszyscyGracze = new ArrayList<PrintWriter>();
         ArrayList<Integer> wszyskiePorty = new ArrayList<Integer>();
@@ -189,6 +161,7 @@ public class Server implements Runnable {
                            // content.addPlayaScore(content.getPlayaNum(clientPortNumber), 0);
 
                             nextLevel=50;
+                            spawn=10;
                             content.startCampaign(writer);
                             tura++;
 
@@ -206,6 +179,7 @@ public class Server implements Runnable {
                          //   content.addPlayaScore(content.getPlayaNum(clientPortNumber), 0);
 
                             nextLevel=50;
+                            spawn=10;
                             content.startCampaign(writer);
                             tura++;
 
@@ -220,6 +194,7 @@ public class Server implements Runnable {
 
                             myHP.add(badAss.getHP());
                             nextLevel=50;
+                            spawn=10;
 
                             content.startCampaign(writer);
                             tura++;
@@ -299,7 +274,7 @@ public class Server implements Runnable {
 
                         quests.quest4Ans(writer, messageFromClient, quests, cybernetyk, haker, badass,content,myHP,myPoints);
                         showStats(writer,getPointsFromya(myHP),AP,hack,DAP,getPointsFromya(myPoints),lvl);
-                        quests.getRandomQuest(writer, Quests.lokacje);
+                        quests.getRandomQuest(writer, Quests.lokacje,spawn);
                         tura++;
                     }
                 }
@@ -326,7 +301,7 @@ public class Server implements Runnable {
                             else {
                                 writer.println("Na razie jesteś sam na tym serwerze");
                                 writer.println("");
-                                quests.getRandomQuest(writer, Quests.lokacje);
+                                quests.getRandomQuest(writer, Quests.lokacje,spawn);
 
                             }
                         }
@@ -339,7 +314,7 @@ public class Server implements Runnable {
                             else {
                                 writer.println("Na razie jesteś sam na tym serwerze");
                                 writer.println("");
-                                quests.getRandomQuest(writer, Quests.lokacje);
+                                quests.getRandomQuest(writer, Quests.lokacje,spawn);
                                 //tura=9;
                             }
                         }
@@ -352,7 +327,7 @@ public class Server implements Runnable {
                             else {
                                 writer.println("Nie ma z kim walczyć, jesteś sam na tym serwerze");
                                 writer.println("");
-                                quests.getRandomQuest(writer, Quests.lokacje);
+                                quests.getRandomQuest(writer, Quests.lokacje,spawn);
                                 //tura=9;
                             }
                         }
@@ -385,7 +360,7 @@ public class Server implements Runnable {
                             showStats(writer,getPointsFromya(myHP),AP,hack,DAP,getPointsFromya(myPoints),lvl);
 
 
-                            quests.getRandomQuest(writer, Quests.lokacje);
+                            quests.getRandomQuest(writer, Quests.lokacje,spawn);
                         }
                     }
 
@@ -417,7 +392,7 @@ public class Server implements Runnable {
                             }
                             else if(nomOfPotentials==0){
                                 writer.println("nie znaleziono nikogo");
-                                quests.getRandomQuest(writer, Quests.lokacje);
+                                quests.getRandomQuest(writer, Quests.lokacje,spawn);
                                 tura=9;
                             }
                         }
@@ -432,7 +407,7 @@ public class Server implements Runnable {
                 }
                 if(tura==14){
                     writer.println("Tymczasem ty idziesz dalej w miasto");
-                    quests.getRandomQuest(writer, Quests.lokacje);
+                    quests.getRandomQuest(writer, Quests.lokacje,spawn);
                     tura++;
                 }
                 if(tura==15){
@@ -444,7 +419,7 @@ public class Server implements Runnable {
                         content.pvpGracze.clear();
                         myPoints.add(1);
                         showStats(writer, getPointsFromya(myHP), AP, hack, DAP, getPointsFromya(myPoints),lvl);
-                        quests.getRandomQuest(writer, Quests.lokacje);
+                        quests.getRandomQuest(writer, Quests.lokacje,spawn);
                         tura=9;
                     }
 
@@ -454,7 +429,7 @@ public class Server implements Runnable {
                     if ((messageFromClient = reader.readLine()) != null) {
                         if(messageFromClient.equals("q")){
 
-                            quests.getRandomQuest(writer, Quests.lokacje);
+                            quests.getRandomQuest(writer, Quests.lokacje,spawn);
                             tura=9;
                         }
                         for(int ii=0; ii< content.nomOfPlayerss();ii++){
@@ -484,6 +459,7 @@ public class Server implements Runnable {
         if(getPointsFromya(content.playersListOfskors.get(content.getPlayaNum(prt))) >= nextLevel){
             lvl++;
             nextLevel=nextLevel*2;
+            spawn=spawn+7;
             writ.println("");
             writ.println("   LEVEL UP!");
             writ.println("");
@@ -551,7 +527,7 @@ public class Server implements Runnable {
                     case "port":
                         SERVER_PORT = Integer.parseInt(properties.getProperty(key));
                         break;
-                    case "defaultHP":
+                    case "ip":
                         SERVER_IP = properties.getProperty(key);
                          break;
 

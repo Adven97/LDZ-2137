@@ -14,7 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class TestJunit {
 
     final static int PORTT = Server.SERVER_PORT;
-    static Server testServer=null;
+    final static String IP = Server.SERVER_IP;
+  /////  static Server testServer=null;
     static ArrayList<PrintWriter> wszyscyGracze = new ArrayList<PrintWriter>();
     static ArrayList<Integer> wszyskiePorty = new ArrayList<Integer>();
     static ArrayList<Integer> scores = new ArrayList<Integer>();
@@ -22,26 +23,11 @@ class TestJunit {
 
     static GameContent gracze = new GameContent(wszyscyGracze, wszyskiePorty,scores,listaQuestow);
 
-//    @Test
-//     void serverTest(){
-//     //   Socket clientSocket = null;
-//        ServerSocket serverSocket=null;
-//        Server ser=null;
-//        try {
-//            serverSocket = new ServerSocket(PORTT);
-//         //   while (true) {
-//                ser = new Server(serverSocket.accept(), gracze);
-//                //serverThread.start();
-//           // }
-//
-//
-//        } catch (IOException e) {}
-//        assertNotNull(ser);
-//    }
+
     @Test
-    void testujSer(){
+    void testujSerwer(){
         try {
-            Socket clientSocket = new Socket("localhost", 1009);
+            Socket clientSocket = new Socket(IP, 1009);
             ServerSocket serverSocket = new ServerSocket(PORTT);
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
             assertNotNull(clientSocket);
@@ -49,7 +35,6 @@ class TestJunit {
             assertNotNull(writer);
         }
         catch (Exception e){}
-
 
     }
 
@@ -73,30 +58,30 @@ class TestJunit {
         assertEquals(gracze.listOfQuests, listaQuestow);
     }
 
-    @Test
-    void getPlaya() {
-
-        gracze.listOfGamePorts.add(0,190);
-
-        assertEquals(java.util.Optional.ofNullable(gracze.listOfGamePorts.get(0)), java.util.Optional.ofNullable(gracze.getPlaya(0)));
-    }
-
-    @Test
-   void getPlayaNum() {
-     assertEquals(java.util.Optional.ofNullable(gracze.listOfGamePorts.indexOf(190)), java.util.Optional.ofNullable(gracze.getPlayaNum(190)));
-    }
-
-
-    @Test
-    void nomOfPlayerss() {
-        assertEquals(gracze.listOfGamePorts.size(), gracze.nomOfPlayerss());
-    }
+//    @Test
+//    void getPlaya() {
+//
+//        gracze.listOfGamePorts.add(0,190);
+//
+//        assertEquals(java.util.Optional.ofNullable(gracze.listOfGamePorts.get(0)), java.util.Optional.ofNullable(gracze.getPlaya(0)));
+//    }
+//
+//    @Test
+//   void getPlayaNum() {
+//     assertEquals(java.util.Optional.ofNullable(gracze.listOfGamePorts.indexOf(190)), java.util.Optional.ofNullable(gracze.getPlayaNum(190)));
+//    }
+//
+//
+//    @Test
+//    void nomOfPlayerss() {
+//        assertEquals(gracze.listOfGamePorts.size(), gracze.nomOfPlayerss());
+//    }
 
     @Test
     void addPlaya() {
 
         try {
-            PrintWriter writer = new PrintWriter(new Socket("localhost", 2137).getOutputStream(), true);
+            PrintWriter writer = new PrintWriter(new Socket(IP, 2137).getOutputStream(), true);
             gracze.addPlaya(writer, PORTT, new Quests(), 0);
         }
         catch (IOException e){
@@ -119,7 +104,7 @@ class TestJunit {
         boolean answer1 =false;
         boolean answer2 =true;
         try {
-            PrintWriter writer = new PrintWriter(new Socket("localhost", 2137).getOutputStream(), true);
+            PrintWriter writer = new PrintWriter(new Socket(IP, 2137).getOutputStream(), true);
             gracze.addPlaya(writer, PORTT, new Quests(), 0);
            answer1= q.getRandomQuestAns (writer,"1", b1, b2, b3, myHP,100);
 

@@ -116,7 +116,6 @@ public class GameContent {
     }
 
     void startCampaign(PrintWriter writer){
-       // options=2;
         writer.println("Piątek, godzina 19 poszedłeś na patrol na Piotrkowską");
         writer.println("Widzisz 5 osobowy gang składający się z ludzi");
         writer.println("Próbują sprzedać heroinę 12 latkowi");

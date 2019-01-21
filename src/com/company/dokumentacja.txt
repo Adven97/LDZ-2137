@@ -1,0 +1,32 @@
+Gra LDZ 2137 - Dokumentacja
+
+Uruchomienie projektu:
+
+1) Należy uruchomić Server.java w celu uruchomienia głównego serwera z którym komunikuje się klient czyli gracz
+2) Należy uruchomić Game.java w celu dodania nowego gracza i podpięcia go pod serwer i rozpoczęcia gry
+
+Gra składa się z klas:
+
+Server.java: Uruchamia Serwer na porcie odczytanym z pliku server_config.xml, obsługuje komunikację z graczami (input użytkownika) oraz pętlę gry.
+			 	
+
+GameContent.java: przechowuje najważniejsze informacje takie jak: listę graczy i ich portów na serwerze, listę punktów dla każdego gracza,
+								metdę która tworzy nowego gracza i dodaje go do listy
+
+Game.java: Tworzy nowego gracza na porcie wpisanym przez użytkownika i podpina go pod serwer, wysyła odpowiednie wiadomości na serwer
+
+Quests.java: Przechowuje treści zadań oraz odpowiedzi na zadania (reaguje na input użytkownika)
+
+PvPHandler.java: przetrzymuje metody obsługujące input użytkownika w prybie PvP (wybór broni), 
+wyświetlanie odpowiednej informacji na porcie użytkownika którego wyzwaliśmy 
+oraz obsługuje wynik starcia (dodanie bądz odjęcie odpowiedniej ilości punktów dla odpowiedniego gracza)
+
+TestJunit.java: Testy jednostkowe, testuje metody:
+				addPlaya(), która odpowiada za dodanie nowego użytkownika na serwerze, używana w GameContent.java
+				getRandomQuestAnsTest() - metoda reagująca na input użytkownika (gdy wpisze 1 to metoda zwróci true a jak 2 to false) 
+				jest używana w klasie Quests.java
+				
+				countFromAray() - metoda sumująca wszystkie Integery w ArrayLiście (używana w Quests.java)
+				testujSerwer() - sprawdza czy poprwanie stworzono Socket i serverSocket i printWritera podłączonego do Socketa
+
+

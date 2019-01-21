@@ -64,15 +64,15 @@ public class Quests {
     }
     void quest1 (PrintWriter writer){
 
-        writer.println("Spotykasz przed Kebabem grupkę pijanych janyszy");
+        writer.println("Spotykasz przed Kebabem grupkę pijAnych JanUszy");
         writer.println("Jeden proponuje ci byś zabił sąsiada konfidenta i złodzieja");
-        writer.println("Co robisz?");
+        writer.println("Co robisZ?");
         writer.println(" [1] Zgadzam się");
         writer.println(" [2] Nie zgadzam się");
     }
     void quest1Ans(PrintWriter writer,String messageFromClient, int tura, Quests content, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
         if (messageFromClient.equals("1")) {
-            writer.println("Zabiłes niewinnego człowieka, zabrał ci 2 HP");
+            writer.println("ZabiłEs niEwinnego człOwieka, zabrał ci 2 HP");
             myHP.add(-2);
           //  knt.exp3[knt.nomOfPlayerss()-1]+=1;
             myPoints.add(2);
@@ -98,8 +98,8 @@ public class Quests {
     }
 
     void quest2 (PrintWriter writer){
-        writer.println("Spotykasz gang uciekający z napadu");
-        writer.println("Gang składa się z 4 druciarzy i 3 androidów");
+        writer.println("Spotykasz ganG uciekaJący z naPadu");
+        writer.println("GaNg skłAda się z 4 druCiarzY i 3 aNdroIdów");
         writer.println("Co robisz?");
         writer.println(" [1] Walczę z nimi");
         writer.println(" [2] Uciekam");
@@ -130,7 +130,7 @@ public class Quests {
     }
 
     void quest3 (PrintWriter writer) {
-        writer.println("Jesteś świadkiem strzelaniny między policją a gangiem androidów");
+        writer.println("JestEś świadkiEm StrZelaNiny międZy poliCją a ganGiem androidów");
         writer.println("Gang składa się z 5 androidów i 3 ludzi pewno to sie zjebie ;)");
         writer.println("Co robisz?");
         writer.println(" [1] Walczę z policją");
@@ -150,7 +150,7 @@ public class Quests {
         }
         else if (messageFromClient.equals("2")) {
             writer.println("Zostałeś postrzelony wielokrotnie");
-            writer.println("Zdołałes pokonac 2 androidów i 1 człowieka,pozostali uciekli");
+            writer.println("Zdołałes pokonac 2 androidóW i 1 człoWieka,pozostali uciekli");
             writer.println("W sumie zabrali ci 22 HP");
             myHP.add(-22);
             myPoints.add(4);
@@ -160,9 +160,9 @@ public class Quests {
         }
 
         else if (messageFromClient.equals("3")) {
-            writer.println("Ledwo udało ci się ujść z życiem");
-            writer.println("Zdołałes pokonac 2 policjantów, 3 androidów i 1 człowieka,pozostali uciekli");
-            writer.println("W sumie zabrali ci 56 HP");
+            writer.println("Ledwo uDało ci się uJść z życiem");
+            writer.println("ZdołAłes pokonac 2 policjaNtów, 3 androidów i 1 człoWieka, poZostaLi ucieKli");
+            writer.println("W suUmie zabRali ci 56 HP");
             myHP.add(-56);
             myPoints.add(8);
            // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
@@ -170,7 +170,7 @@ public class Quests {
             tura++;
         }
         else if (messageFromClient.equals("4")) {
-            writer.println("Z nudów poszedłeś na kebaba");
+            writer.println("Z nudów posZedłeś na kebaba");
             writer.println("Wziąłes super mega rollo");
             writer.println("Twoje hp wzrosło o 13");
             myHP.add(13);
@@ -189,9 +189,9 @@ public class Quests {
     }
 
     void quest4 (PrintWriter writer) {
-        writer.println("Udałeś się na Aleje Politechniki");
-        writer.println("100 lat doszło tu do wybuchu reaktora termojądrowego");
-        writer.println("Cała okolica w promieniu 100 metrów jest strefą zakazaną");
+        writer.println("Udałeś się na Aleje PoliTechniki");
+        writer.println("100 lAt doszłO tu do wyBuchu reAktora terMojądrowego");
+        writer.println("CałA oKolica w promieniu 100 metRów jest stRefą zakazaną");
         writer.println("Właśnie atakuje cie horda Zombie");
         writer.println("Co robisz?");
         writer.println(" [1] Atakuję");
@@ -201,14 +201,14 @@ public class Quests {
     void quest4Ans(PrintWriter writer,String messageFromClient, Quests content, boolean b1, boolean b2, boolean b3, GameContent knt,ArrayList<Integer> myHP,ArrayList<Integer> myPoints){
         if (messageFromClient.equals("1")) {
             if(b1) {
-                writer.println("Nie było ciężko, lekko cie pokiereszowali");
+                writer.println("Nie było ciężko, lekk0 cie p0kierEszowali");
                 writer.println(" -5 HP");
                 myHP.add(-5);
                 myPoints.add(2);
               //  content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b2) {
-                writer.println("Nie było ciężko, ale jeden cie ugryzł w noge");
+                writer.println("Nie było ciężKo, ale jeden cie ugryzł w n0ge");
                 writer.println(" -15 HP");
                 myHP.add(-15);
               //  knt.exp3[knt.nomOfPlayerss()-1]+=1;
@@ -245,7 +245,7 @@ public class Quests {
     }
 
 
-    void getRandomQuest (PrintWriter writer, String[] lokacje) {
+    void getRandomQuest (PrintWriter writer, String[] lokacje, int spawn) {
 
         Random rand = new Random();
         int num = rand.nextInt(lokacje.length);
@@ -256,13 +256,13 @@ public class Quests {
         }
         else{
             //zrobic z 10 jakas zmienna spawn z servera
-            ileLudzi = rand.nextInt(10);
-            ileDruciarzy = rand.nextInt(10);
-            ileAndroid = rand.nextInt(10);
+            ileLudzi = rand.nextInt(spawn);
+            ileDruciarzy = rand.nextInt(spawn);
+            ileAndroid = rand.nextInt(spawn);
         }
 
         writer.println("Jesteś "+lokacje[num]);
-        writer.println("Właśnie atakuje cie "+ileLudzi+ " złych ziomków, "+ileDruciarzy+" Druciarzy i "+ileAndroid+" Androidów");
+        writer.println("Właśnie atAkuje cie "+ileLudzi+ " złyCh zioMków, "+ileDruciarzy+" DruciaRzY i "+ileAndroid+" AndRoiDów");
         writer.println("Co robisz?");
         writer.println(" [1] Atakuję");
         writer.println(" [2] Uciekam");
@@ -275,7 +275,7 @@ public class Quests {
         if (messageFromClient.equals("1")) {
             if(b1) {
 
-                writer.println("Druciarze to dla ciebie pestka, gorzej z ludzmi i androidami");
+                writer.println("Druciarze to dlA ciebie peStka, gorzEj z ludzmi i aNdroiDami");
                 writer.println(" "+ileZycia(4, 1, 2)+" HP");
                 myHP.add(ileZycia(4, 1, 2));
              //   knt.exp3[knt.nomOfPlayerss()-1]+=2;
@@ -284,7 +284,7 @@ public class Quests {
                // content.showStats(writer,Server.HP,Server.AP, Server.hack, Server.DAP,knt);
             }
             if(b2) {
-                writer.println("Dobrze rozwaliłes tych andków, z pozostałymi nie było tak łatwo");
+                writer.println("Dobrze rozWaliłes tych andków, z pozostałymi nie było tak łatwo");
                 writer.println(" "+ileZycia(4, 2, 1)+" HP");
                 myHP.add(ileZycia(4, 2, 1));
               //  knt.exp3[knt.nomOfPlayerss()-1]+=2;
@@ -292,7 +292,7 @@ public class Quests {
                 tem=true;
             }
             if(b3) {
-                writer.println("Poradziłes sobie z ludzmi, niestety z pozostałymi nie było łatwo");
+                writer.println("PoradziłEs soBie z ludzmi, niestEty z pozostałyMi nie było łaTwo");
                 writer.println(" "+ileZycia(1, 2, 4)+" HP");
                 myHP.add(ileZycia(1, 2, 4));
                 //knt.exp3[knt.nomOfPlayerss()-1]+=2;
