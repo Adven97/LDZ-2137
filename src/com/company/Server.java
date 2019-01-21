@@ -1,23 +1,27 @@
 package com.company;
 
-import java.io.IOException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.bind.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
 import java.lang.Runnable;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.net.InetSocketAddress;
-import java.io.PrintWriter;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.*;
 import java.net.BindException;
-import java.util.Collections;
-import java.util.Random;
 
 //import static com.company.Quests.nomOfQuests;
 
 public class Server implements Runnable {
 
-    final static int SERVER_PORT = 2137;
+   // static String SERVER_POR;
+    static int SERVER_PORT;
+    static String SERVER_IP;
 
     Socket clientSocket = null;
     GameContent content;
@@ -56,6 +60,36 @@ public class Server implements Runnable {
         MAXHP=100;
     }
     public static void main(String[] args) throws IOException {
+        loadXMLFile();
+//        try {
+//        File fXmlFile = new File("/Users/mkyong/staff.xml");
+//        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+//        Document doc = dBuilder.parse(fXmlFile);
+//        //optional, but recommended
+//        //read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+//        doc.getDocumentElement().normalize();
+//        System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+//        NodeList nList = doc.getElementsByTagName("staff");
+//        System.out.println("----------------------------");
+//
+//        for (int temp = 0; temp < nList.getLength(); temp++) {
+//            Node nNode = nList.item(temp);
+//            System.out.println("Current Element :" + nNode.getNodeName());
+//            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//                Element eElement = (Element) nNode;
+//                System.out.println("Staff id : " + eElement.getAttribute("id"));
+//                System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
+//                System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
+//                System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
+//                System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
+//
+//            }
+//        }
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//    }
+
 
         ArrayList<PrintWriter> wszyscyGracze = new ArrayList<PrintWriter>();
         ArrayList<Integer> wszyskiePorty = new ArrayList<Integer>();
@@ -82,14 +116,13 @@ public class Server implements Runnable {
 
     public void run() {
 
-        String clientIp = "localhost";
         try {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             int clientPortNumber = Integer.parseInt(reader.readLine());
 
-            System.out.println("Nowy Klient, Ip: " + clientIp + ", Port: " + clientPortNumber);
-            PrintWriter writer = new PrintWriter(new Socket(clientIp, clientPortNumber).getOutputStream(), true);
+            System.out.println("Nowy Klient, Ip: " + SERVER_IP + ", Port: " + clientPortNumber);
+            PrintWriter writer = new PrintWriter(new Socket(SERVER_IP, clientPortNumber).getOutputStream(), true);
 
        //     content.exp3[content.nomOfPlayerss()]=0;
             content.addPlaya(writer,clientPortNumber, new Quests(),content.nomOfPlayerss());
@@ -201,7 +234,6 @@ public class Server implements Runnable {
                 }
 
                 if(tura ==4) {
-
 
                     if ((messageFromClient = reader.readLine()) != null) {
                         quests.quest0Ans(writer,messageFromClient,tura,quests,content,myHP,myPoints);
@@ -377,7 +409,7 @@ public class Server implements Runnable {
                     if ((messageFromClient = reader.readLine()) != null) {
                         for (int ii = 0; ii < content.nomOfPlayerss(); ii++) {
                             if (messageFromClient.contains(String.valueOf(content.getPlaya(ii)))) {
-                                pvp.wyzwijKogos(writer,messageFromClient,ii,content,quests,clientPortNumber);
+                                pvp.wyzwijKogos(writer, ii,content,quests,clientPortNumber);
 
                                 nomOfPotentials++;
                                 tura=14;
@@ -502,4 +534,33 @@ public class Server implements Runnable {
         writer.println(" ");
     }
 
+    public static void loadXMLFile()
+    {
+        try {
+            File file = new File("C:/Users/adven97/Desktop/PAI/LDZ 2137/xml/server_config.xml");
+            FileInputStream fileInput = new FileInputStream(file);
+            Properties properties = new Properties();
+            properties.loadFromXML(fileInput);
+            fileInput.close();
+
+            Enumeration enuKeys = properties.keys();
+            String key;
+            while (enuKeys.hasMoreElements()) {
+                switch(key = (String) enuKeys.nextElement())
+                {
+                    case "port":
+                        SERVER_PORT = Integer.parseInt(properties.getProperty(key));
+                        break;
+                    case "defaultHP":
+                        SERVER_IP = properties.getProperty(key);
+                         break;
+
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

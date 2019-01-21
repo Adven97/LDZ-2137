@@ -32,7 +32,7 @@ public class PvPhandler {
 
     }
 
-    void wyzwijKogos(PrintWriter writer, String messageFromClient, int ii,  GameContent content, Quests quests, int clientPortNumber){
+    void wyzwijKogos(PrintWriter writer, int ii,  GameContent content, Quests quests, int clientPortNumber){
         content.pvpGracze.add(1,content.getPlaya(ii));
         quests.pvpIntro(writer);
         content.listOfPlayers.get(ii).println("Ktos na porcie "+clientPortNumber+ " chce sie bić w stylu oldsqlowym");

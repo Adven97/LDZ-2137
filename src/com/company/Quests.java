@@ -255,6 +255,7 @@ public class Quests {
             ileAndroid = 25;
         }
         else{
+            //zrobic z 10 jakas zmienna spawn z servera
             ileLudzi = rand.nextInt(10);
             ileDruciarzy = rand.nextInt(10);
             ileAndroid = rand.nextInt(10);

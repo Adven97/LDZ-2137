@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TestJunit {
 
+    final static int PORTT = Server.SERVER_PORT;
     static Server testServer=null;
     static ArrayList<PrintWriter> wszyscyGracze = new ArrayList<PrintWriter>();
     static ArrayList<Integer> wszyskiePorty = new ArrayList<Integer>();
@@ -21,19 +22,35 @@ class TestJunit {
 
     static GameContent gracze = new GameContent(wszyscyGracze, wszyskiePorty,scores,listaQuestow);
 
-    static {
-        Socket clientSocket = null;
+//    @Test
+//     void serverTest(){
+//     //   Socket clientSocket = null;
+//        ServerSocket serverSocket=null;
+//        Server ser=null;
+//        try {
+//            serverSocket = new ServerSocket(PORTT);
+//         //   while (true) {
+//                ser = new Server(serverSocket.accept(), gracze);
+//                //serverThread.start();
+//           // }
+//
+//
+//        } catch (IOException e) {}
+//        assertNotNull(ser);
+//    }
+    @Test
+    void testujSer(){
         try {
-            ServerSocket serverSocket = new ServerSocket(2137);
-            //clientSocket = new Socket("localhost", 2137);
+            Socket clientSocket = new Socket("localhost", 1009);
+            ServerSocket serverSocket = new ServerSocket(PORTT);
+            PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
+            assertNotNull(clientSocket);
+            assertNotNull(serverSocket);
+            assertNotNull(writer);
+        }
+        catch (Exception e){}
 
-                Thread serverThread = new Thread(new Server(serverSocket.accept(), gracze));
-                serverThread.start();
 
-
-        } catch (IOException e) {}
-
-        testServer = new Server(clientSocket, gracze);
     }
 
     @Test
@@ -78,10 +95,9 @@ class TestJunit {
     @Test
     void addPlaya() {
 
-
         try {
             PrintWriter writer = new PrintWriter(new Socket("localhost", 2137).getOutputStream(), true);
-            gracze.addPlaya(writer, 2137, new Quests(), 0);
+            gracze.addPlaya(writer, PORTT, new Quests(), 0);
         }
         catch (IOException e){
             System.out.println("lipaaa  "+ e.getMessage() + " "+ e.getCause());
@@ -90,7 +106,6 @@ class TestJunit {
         assertNotNull(gracze.listOfPlayers.get(0));
         assertNotNull(gracze.listOfQuests.get(0));
         assertNotNull(gracze.listOfGamePorts.get(0));
-
 
     }
 
@@ -105,7 +120,7 @@ class TestJunit {
         boolean answer2 =true;
         try {
             PrintWriter writer = new PrintWriter(new Socket("localhost", 2137).getOutputStream(), true);
-            gracze.addPlaya(writer, 2137, new Quests(), 0);
+            gracze.addPlaya(writer, PORTT, new Quests(), 0);
            answer1= q.getRandomQuestAns (writer,"1", b1, b2, b3, myHP,100);
 
            answer2= q.getRandomQuestAns (writer,"2", b1, b2, b3, myHP,100);
@@ -121,40 +136,16 @@ class TestJunit {
     @Test
 
     void countFromAray(){
-        Quests q = new Quests();
+        Server s =new Server();
+      //  Quests q = new Quests();
         ArrayList<Integer> tmp=new ArrayList<Integer>();
         tmp.add(1);
         tmp.add(10);
         tmp.add(19);
         tmp.add(20);
 
-        assertEquals(testServer.getPointsFromya(tmp),50);
+        assertEquals(s.getPointsFromya(tmp),50);
     }
 
-
-//
-//    @Test
-//    void showPlot() {
-//    }
-//
-//    @Test
-//    void beginingOfTheGame() {
-//    }
-//
-//    @Test
-//    void cybernetykBackstory() {
-//    }
-//
-//    @Test
-//    void hakerBackstory() {
-//    }
-//
-//    @Test
-//    void badassBackstory() {
-//    }
-//
-//    @Test
-//    void startCampaign() {
-//    }
 
 }

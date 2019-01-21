@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 public class Game implements Runnable {
 
     Socket mainSocket = null;
-    final static String HOST_NAME = "localhost";
+    //final static String HOST_NAME = "localhost";
 
     Game(Socket mainSocket) {
         this.mainSocket = mainSocket;
@@ -19,7 +19,9 @@ public class Game implements Runnable {
 
     public static void main(String[] args) throws IOException {
 
-        int serverPort = new Server().SERVER_PORT;
+        Server.loadXMLFile();
+        int serverPort = Server.SERVER_PORT;
+        String hostName = Server.SERVER_IP;
 
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -28,7 +30,7 @@ public class Game implements Runnable {
             System.out.println("Proszę podać 4 cyfrowy numer portu");
             int clientPort = Integer.parseInt(reader.readLine());
 
-            Socket clientSocket = new Socket(HOST_NAME, serverPort);
+            Socket clientSocket = new Socket(hostName, serverPort);
             ServerSocket serverSocket = new ServerSocket(clientPort);
 
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="port">1234</entry>
+    <entry key="ip">localhost</entry>
+    <entry key="gameSpeed">5</entry>
+</properties>
